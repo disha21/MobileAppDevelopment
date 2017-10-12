@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import edu.neu.madcourse.dishasoni.R;
-import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
+//import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
 
 

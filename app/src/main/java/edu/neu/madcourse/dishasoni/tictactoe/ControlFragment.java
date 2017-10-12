@@ -46,7 +46,7 @@ import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.PREF_RESTORE;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.calculateScore;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.mMediaPlayer;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
-import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
+
 
 
 public class ControlFragment extends Fragment {
@@ -71,6 +71,8 @@ public class ControlFragment extends Fragment {
      boolean isPaused = false;
     boolean phaseTwo = false;
    static long remainingTime = 0;
+
+    boolean isPhase1;
 
     GameFragment gf;
 
@@ -182,7 +184,8 @@ public class ControlFragment extends Fragment {
                 if(countClicks <= 9) {
                     GameActivity.checkWordScore();
                     Log.d("clicking done", "update view");
-                    gf.updateView();
+                    if(gf.isPhase1)
+                        gf.updateView();
                 }else {
                     countDownTimer.cancel();
                     phaseTwo = true;
@@ -302,6 +305,8 @@ public class ControlFragment extends Fragment {
     }
 
     public int findIfWordsExists() {
+        String[] selectedWords = gf.getSelectedWords();
+
         for (int i = 0; i < selectedWords.length; i++) {
             findWordsInFile(selectedWords[i].toString().toLowerCase());
         }

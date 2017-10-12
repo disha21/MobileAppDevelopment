@@ -68,16 +68,21 @@ public class GameFragment extends Fragment {
     private List<String> words = new ArrayList<String>();
     private int[] lastMove = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
     public static String selectedWord = "";
-    public static String[] selectedWords = {"", "", "", "", "", "", "", "", ""};
+//    public static String[] selectedWords = {"", "", "", "", "", "", "", "", ""};
     public boolean isRestore;
-    ArrayList<ArrayList<Integer>> indexes = new ArrayList<>(9);
-    Map<Integer, Boolean> map = new HashMap<>();
+//    ArrayList<ArrayList<Integer>> indexes = new ArrayList<>(9);
+//    Map<Integer, Boolean> map = new HashMap<>();
     String wordsPhase = "";
     public static Vibrator vibrator;
 
     private View rootView;
 
+    private GameBoard gameBoard;
+
     private String gameData = "";
+
+
+    boolean isPhase1;
     // private ControlFragment controlFragment;
 
 
@@ -109,7 +114,10 @@ public class GameFragment extends Fragment {
             isRestore = b.getBoolean(GameActivity.KEY_RESTORE);
 
         }
-        initializeList();
+
+        isPhase1 = true;
+        gameBoard = new Stage1Game();
+
     }
 
     private void clearAvailable() {
@@ -144,25 +152,25 @@ public class GameFragment extends Fragment {
     }
 
 
-    private void initializeList() {
-        for (int i = 0; i < 9; i++) {
-            ArrayList<Integer> n = new ArrayList<>();
-            indexes.add(n);
-        }
-    }
+//    private void initializeList() {
+//        for (int i = 0; i < 9; i++) {
+//            ArrayList<Integer> n = new ArrayList<>();
+//            indexes.add(n);
+//        }
+//    }
 
-    private void addToList(int i, int j) {
-        indexes.get(i).add(j);
-    }
+//    private void addToList(int i, int j) {
+//        indexes.get(i).add(j);
+//    }
 
-    private boolean removeFromList(int i, int j) {
-        ArrayList<Integer> l = indexes.get(i);
-        if (l.get(l.size() - 1) == j) {
-            l.remove(l.size() - 1);
-            return true;
-        }
-        return false;
-    }
+//    private boolean removeFromList(int i, int j) {
+//        ArrayList<Integer> l = indexes.get(i);
+//        if (l.get(l.size() - 1) == j) {
+//            l.remove(l.size() - 1);
+//            return true;
+//        }
+//        return false;
+//    }
 
     private void initViews(View rootView) {
         mEntireBoard.setView(rootView);
@@ -199,42 +207,28 @@ public class GameFragment extends Fragment {
 
                         if (inner.isPressed()) {
                             if (mSmallTiles[fLarge][fSmall].getOwner() == Tile.Owner.SELECTED) {
-                                if (removeFromList(fLarge, fSmall)) {
+                                if(gameBoard.remove(fLarge, fSmall)){
                                     inner.setBackgroundColor(getResources().getColor(R.color.yellow_color));
                                     mSmallTiles[fLarge][fSmall].setOwner(Tile.Owner.UNSELECTED);
-                                    if (indexes.get(fLarge).size() == 0) {
-                                        selectedWords[fLarge] = "";
-                                    } else {
-
-                                        StringBuilder sb = new StringBuilder(selectedWords[fLarge]);
-                                        selectedWords[fLarge] = sb.substring(0, indexes.get(fLarge).size() - 1);
-
-                                    }
                                 }
-                                Log.d("indexes removed", indexes.toString());
-
+//                                Log.d("indexes removed", indexes.toString());
                             } else {
-                                if(isValidMove(fLarge, fSmall)){
+                                if(gameBoard.isValidMove(fLarge, fSmall)){
                                     vibrator.vibrate(50);
 //                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 150);
 //                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,250);
-                                    mLastLarge = fLarge;
-                                    mLastSmall = fSmall;
-                                    lastMove[mLastLarge] = mLastSmall;
+//                                    mLastLarge = fLarge;
+//                                    mLastSmall = fSmall;
+//                                    lastMove[mLastLarge] = mLastSmall;
+                                    gameBoard.add(fLarge, fSmall, val);
                                     mSmallTiles[fLarge][fSmall].setOwner(Tile.Owner.SELECTED);
-                                    selectedWords[fLarge] = selectedWords[fLarge] + val;
-                                    addToList(fLarge, fSmall);
-                                    Log.d("indexes", indexes.toString());
+//                                    selectedWords[fLarge] = selectedWords[fLarge] + val;
+//                                    addToList(fLarge, fSmall);
+//                                    Log.d("indexes", indexes.toString());
                                     inner.setBackgroundColor(getResources().getColor(R.color.blue_color));
                                 } else {
                                     Toast.makeText(getActivity().getApplicationContext(), "Left ,Right or Diagonal Only !", Toast.LENGTH_SHORT).show();
                                 }
-//                                if (makeMove(mLastLarge,mLastSmall,smallTile )) {
-//
-//
-//                                }else{
-//                                    Toast.makeText(getActivity().getApplicationContext(), "Left ,Right or Diagonal Only !", Toast.LENGTH_SHORT).show();
-//                                }
                             }
 
 
@@ -273,20 +267,20 @@ public class GameFragment extends Fragment {
 //        }
 //    }
 
-    private boolean isValidMove(int i, int j){
-        Log.d("isValid Move" , "i " + i + " j " + j);
-        ArrayList<Integer> arr = indexes.get(i);
-        Log.d("isvalidMove array" , arr.toString());
-        if(arr.size() == 0)
-            return true;
-        else {
-            int prev = arr.get(arr.size() - 1);
-            Log.d("isvalidMove else" , "" + prev);
-            List<Integer> a = findNextMove(prev);
-            Log.d("isvalidMove list" , "" + a.toString());
-            return findNextMove(prev).contains(j);
-        }
-    }
+//    private boolean isValidMove(int i, int j){
+//        Log.d("isValid Move" , "i " + i + " j " + j);
+//        ArrayList<Integer> arr = indexes.get(i);
+//        Log.d("isvalidMove array" , arr.toString());
+//        if(arr.size() == 0)
+//            return true;
+//        else {
+//            int prev = arr.get(arr.size() - 1);
+//            Log.d("isvalidMove else" , "" + prev);
+//            List<Integer> a = findNextMove(prev);
+//            Log.d("isvalidMove list" , "" + a.toString());
+//            return findNextMove(prev).contains(j);
+//        }
+//    }
 
 
     protected void hideGame() {
@@ -301,9 +295,11 @@ public class GameFragment extends Fragment {
         ControlFragment.foundWords.clear();
         ControlFragment.notFoundWords.clear();
         ControlFragment.searchWordInFile.clear();
-        selectedWords = new String[]{"", "", "", "", "", "", "", "", ""};
+
+        if(isPhase1){
+            gameBoard = new Stage1Game();
+        }
         totalScorePhase1 = 0;
-        initializeList();
         Intent intent = new Intent(getActivity(), GameActivity.class);
         getActivity().startActivity(intent);
         GameActivity.mMediaPlayer.stop();
@@ -328,6 +324,15 @@ public class GameFragment extends Fragment {
         mLastSmall = -1;
         mLastLarge = -1;
         setAvailableFromLastMove(mLastSmall);
+    }
+
+    public String[] getSelectedWords() {
+        return gameBoard.getSelectedWords();
+    }
+
+    public void moveToStage2(){
+        isPhase1 = false;
+        gameBoard = new Stage2Game();
     }
 
     private void setAvailableFromLastMove(int small) {
@@ -374,9 +379,11 @@ public class GameFragment extends Fragment {
 
     public void updateView() {
         Log.d("inside update view", "update view");
+        ArrayList<ArrayList<Integer>> indexes = gameBoard.getBoard();
         for (int j = 0; j < 9; j++) {
             View outer = rootView.findViewById(mLargeIds[j]);
             ArrayList<Integer> ll = new ArrayList<Integer>();
+
             if (indexes.get(j).size() > 0) {
                 ArrayList<Integer> l = indexes.get(j);
                 for (int i = 0; i < 9; i++) {
@@ -395,11 +402,10 @@ public class GameFragment extends Fragment {
 
             }
         }
-
-
     }
 
     public void updateViewForPhase2(){
+        moveToStage2();
       //  mEntireBoard.updateDrawableState();
         for (int large = 0; large < 9; large++) {
             View outer = rootView.findViewById(mLargeIds[large]);
