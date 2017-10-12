@@ -14,11 +14,15 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class DictionaryActivity extends AppCompatActivity {
 
     String currentFile = null;
+    final TreeSet<String> searchWordInFile = new TreeSet<String>();
+    static List<String> foundWords = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +91,14 @@ public class DictionaryActivity extends AppCompatActivity {
 
     }
 
+
     public void clearAll(View view) {
         EditText searchWord = (EditText) findViewById(R.id.wordInput);
         TextView displayWords = (TextView) findViewById(R.id.ViewWords);
         displayWords.setText("");
         searchWord.setText("");
     }
+
+
 
 }

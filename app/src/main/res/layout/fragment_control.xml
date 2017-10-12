@@ -1,0 +1,86 @@
+<!--
+ ! Excerpted from "Hello, Android",
+ ! published by The Pragmatic Bookshelf.
+ ! Copyrights apply to this code. It may not be used to create training material,
+ ! courses, books, articles, and the like. Contact us if you are in doubt.
+ ! We make no guarantees that this code is fit for any purpose.
+ ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_height="fill_parent">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_gravity="bottom|left"
+       android:weightSum="1">
+   <TextView
+       android:id="@+id/nameView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       />
+      </LinearLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_gravity="bottom|left"
+       android:weightSum="1">
+      <Button
+          android:id="@+id/restart"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text ="@string/restart_label"
+          android:drawableTop="@drawable/restart"
+          />
+      <Button
+          android:id="@+id/home"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text ="@string/main_menu_label"
+          android:drawableTop="@drawable/home"
+          />
+
+      <Button
+          android:id="@+id/pause"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text ="Pause"
+          android:drawableTop="@drawable/home"
+          />
+   </LinearLayout>
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_gravity="bottom|center"
+       >
+      <Button
+          android:id="@+id/timer"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:text ="TIMER :XX:XX"
+          />
+      <Button
+          android:id="@+id/mute"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:text ="MUTE"
+          />
+      <Button
+          android:id="@+id/checkWord"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:text ="Check Word"
+          android:onClick="checkWords"
+          />
+
+   </LinearLayout>
+</LinearLayout>
+
+
+

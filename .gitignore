@@ -8,5 +8,5 @@
 /captures
 .externalNativeBuild
 *.apk
-
+.idea
 

@@ -42,6 +42,18 @@
                     android:layout_height="wrap_content"
                     android:onClick="DictionaryActivity"
                     android:text="Dictionary"></Button>
+                <Button
+                    android:id="@+id/WordGame"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="ScroggleActivity"
+                    android:text="Word Game"></Button>
+                <Button
+                    android:id="@+id/tictacToe"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="WordGameActivity"
+                    android:text="Tic Tac Toe"></Button>
 
             </LinearLayout>
 

@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import edu.neu.madcourse.dishasoni.tictactoe.EnterNameActivity;
+import edu.neu.madcourse.dishasoni.tictactoe.WordGameActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void AboutMe(View view) {
         Intent in =  new Intent(MainActivity.this,AboutMe.class);
-     //   Intent intent = new Intent(MainActivity.this, AboutMe.class);
         startActivity(in);
     }
     public void GenerateError(View view) {
@@ -27,4 +29,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, DictionaryActivity.class);
         startActivity(intent);
     }
+    public void ScroggleActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, EnterNameActivity.class);
+        startActivity(intent);
+    }
+
+
 }
