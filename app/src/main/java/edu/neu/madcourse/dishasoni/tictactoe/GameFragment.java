@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.io.InputStream;
 
 import static android.content.Context.MODE_PRIVATE;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.*;
@@ -58,7 +59,7 @@ public class GameFragment extends Fragment {
     private Tile mEntireBoard = new Tile(this);
     private Tile mLargeTiles[] = new Tile[9];
     private Tile mSmallTiles[][] = new Tile[9][9];
-    private Tile.Owner mPlayer = Tile.Owner.UNSELECTED;
+   private Tile.Owner mPlayer = Tile.Owner.UNSELECTED;
     private Set<Tile> mAvailable = new HashSet<Tile>();
     private int mSoundX, mSoundO, mSoundMiss, mSoundRewind;
     private SoundPool mSoundPool;
@@ -80,9 +81,10 @@ public class GameFragment extends Fragment {
     private GameBoard gameBoard;
 
     private String gameData = "";
+    private static String fileName  = "input_word_game";
 
 
-    boolean isPhase1;
+    boolean isPhase1 = true;
     // private ControlFragment controlFragment;
 
 
@@ -99,15 +101,7 @@ public class GameFragment extends Fragment {
         mSoundO = mSoundPool.load(getActivity(), R.raw.sergenious_moveo, 1);
         mSoundMiss = mSoundPool.load(getActivity(), R.raw.erkanozan_miss, 1);
         mSoundRewind = mSoundPool.load(getActivity(), R.raw.joanne_rewind, 1);
-        words.add("abatement");
-        words.add("burroweed");
-        words.add("cichorium");
-        words.add("dartboard");
-        words.add("fivescore");
-        words.add("garrigues");
-        words.add("haraucana");
-        words.add("welcomely");
-        words.add("indirubin");
+
         Bundle b = this.getActivity().getIntent().getExtras();
         if (b != null) {
             gameData = b.getString("gameData");
@@ -145,6 +139,12 @@ public class GameFragment extends Fragment {
             }
 
         }
+
+        InputStream file = getResources().openRawResource(
+                getResources().getIdentifier(fileName,
+                        "raw", getActivity().getPackageName()));
+        words = new Stage1Game().generateWordList(file);
+
         initViews(rootView);
         updateAllTiles();
 
@@ -197,9 +197,6 @@ public class GameFragment extends Fragment {
                     }
 
                 }
-
-//
-
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -246,42 +243,6 @@ public class GameFragment extends Fragment {
     }
 
 
-//    private void makeMove(int large, int small) {
-//        mLastLarge = large;
-//        mLastSmall = small;
-//        Tile smallTile = mSmallTiles[large][small];
-//        Tile largeTile = mLargeTiles[large];
-//        smallTile.setOwner(mPlayer);
-//        setAvailableFromLastMove(small);
-//        Tile.Owner oldWinner = largeTile.getOwner();
-//        Tile.Owner winner = largeTile.findWinner();
-//        if (winner != oldWinner) {
-//            largeTile.animate();
-//            largeTile.setOwner(winner);
-//        }
-//        winner = mEntireBoard.findWinner();
-//        mEntireBoard.setOwner(winner);
-//        updateAllTiles();
-//        if (winner != Tile.Owner.UNSELECTED) {
-//            ((GameActivity) getActivity()).reportWinner(winner);
-//        }
-//    }
-
-//    private boolean isValidMove(int i, int j){
-//        Log.d("isValid Move" , "i " + i + " j " + j);
-//        ArrayList<Integer> arr = indexes.get(i);
-//        Log.d("isvalidMove array" , arr.toString());
-//        if(arr.size() == 0)
-//            return true;
-//        else {
-//            int prev = arr.get(arr.size() - 1);
-//            Log.d("isvalidMove else" , "" + prev);
-//            List<Integer> a = findNextMove(prev);
-//            Log.d("isvalidMove list" , "" + a.toString());
-//            return findNextMove(prev).contains(j);
-//        }
-//    }
-
 
     protected void hideGame() {
         mEntireBoard.getView().setVisibility(View.INVISIBLE);
@@ -291,6 +252,7 @@ public class GameFragment extends Fragment {
     protected void showGame() {
         mEntireBoard.getView().setVisibility(View.VISIBLE);
     }
+
     public void restartGame() {
         ControlFragment.foundWords.clear();
         ControlFragment.notFoundWords.clear();
@@ -315,6 +277,7 @@ public class GameFragment extends Fragment {
             mLargeTiles[large] = new Tile(this);
             for (int small = 0; small < 9; small++) {
                 mSmallTiles[large][small] = new Tile(this);
+
             }
             mLargeTiles[large].setSubTiles(mSmallTiles[large]);
         }
@@ -363,7 +326,6 @@ public class GameFragment extends Fragment {
 
 
     private void updateAllTiles() {
-
         mEntireBoard.updateDrawableState();
         for (int large = 0; large < 9; large++) {
             mLargeTiles[large].updateDrawableState();
@@ -406,14 +368,19 @@ public class GameFragment extends Fragment {
 
     public void updateViewForPhase2(){
         moveToStage2();
-      //  mEntireBoard.updateDrawableState();
         for (int large = 0; large < 9; large++) {
             View outer = rootView.findViewById(mLargeIds[large]);
             for (int small = 0; small < 9; small++) {
                 Button inner = (Button) outer.findViewById(mSmallIds[small]);
-                if(mSmallTiles[large][small].getOwner() == Tile.Owner.SELECTED);
-                mSmallTiles[large][small].setOwner(Tile.Owner.UNSELECTED);
-                inner.setBackgroundColor(getResources().getColor(R.color.yellow_color));
+                Tile tile = mSmallTiles[large][small];
+                if(tile.getOwner().equals(Tile.Owner.UNSELECTED)){
+                    inner.setText("");
+                    inner.setBackgroundColor(getResources().getColor(R.color.gray_color));
+                }
+                if(tile.getOwner().equals(Tile.Owner.SELECTED)){
+                    tile.setOwner(Tile.Owner.UNSELECTED);
+                    inner.setBackgroundColor(getResources().getColor(R.color.yellow_color));
+                }
             }
         }
     }
@@ -459,68 +426,5 @@ public class GameFragment extends Fragment {
     }
 
 
-
-    public List<Integer> findNextMove(Integer num){
-        List<Integer> list1 = new ArrayList<Integer>();
-        switch (num){
-            case -1:
-                list1.addAll(Arrays.asList(0,1,2,3,4,5,6,7,8));
-                break;
-            case 0:
-                list1.addAll(Arrays.asList(1,3,4));
-                break;
-            case 1:
-                list1.addAll(Arrays.asList(0,2,3,4,5));
-                break;
-            case 2:
-                list1.addAll(Arrays.asList(1,4,5));
-                break;
-            case 3:
-                list1.addAll(Arrays.asList(0,1,4,6,7));
-                break;
-            case 4:
-                list1.addAll(Arrays.asList(0,1,2,3,5,6,7,8));
-                break;
-            case 5:
-                list1.addAll(Arrays.asList(1,2,4,7,8));
-                break;
-            case 6:
-                list1.addAll(Arrays.asList(3,4,7));
-                break;
-            case 7:
-                list1.addAll(Arrays.asList(3,4,5,6,8));
-                break;
-            case 8:
-                list1.addAll(Arrays.asList(4,5,7));
-                break;
-
-        }
-        return list1;
-
-    }
-
-    private boolean makeMove(int large, int small,Tile tile) {
-        boolean canMove = true;
-        List<Integer> list1 = new ArrayList<Integer>();
-        List<Integer> list2 = new ArrayList<Integer>();
-        if(small == -1 || large == -1){
-            return canMove;
-        }
-        if(tile.getLargePos() != large){
-            list2 = findNextMove(lastMove[tile.getLargePos()]);
-            if(list2.contains(tile.getSmallPos())){
-                return canMove;
-            }else{
-                return !canMove;
-            }
-        }else{
-            list1 = findNextMove(small);
-            if(list1.contains(tile.getSmallPos())){
-                return canMove;
-            }else{
-                return false;
-            }
-        }
-    }
 }
 

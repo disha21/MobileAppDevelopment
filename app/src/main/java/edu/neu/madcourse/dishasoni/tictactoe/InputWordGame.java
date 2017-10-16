@@ -21,6 +21,7 @@ public class InputWordGame {
         FileWriter fw = null;
         String sCurrentLine = "";
 
+
         try {
             fw = new FileWriter("/Users/dishasoni/AndroidStudioProjects/Hello-MAD/app/src/main/res/raw/input_word_game.txt");
             bw = new BufferedWriter(fw);
@@ -29,13 +30,15 @@ public class InputWordGame {
 
             while ((sCurrentLine = br.readLine()) != null) {
                 if(sCurrentLine.trim().length()== 9){
-                  //  System.out.println(sCurrentLine);
-                    bw.write(sCurrentLine+"\n");
+                        bw.write(sCurrentLine+"\n");
+                    }
 
 
                 }
 
-            }
+            bw.close();
+            fw.close();
+
 
         } catch (IOException e) {
 

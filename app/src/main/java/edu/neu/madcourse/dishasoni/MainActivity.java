@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void ScroggleActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, EnterNameActivity.class);
+        Intent intent = new Intent(MainActivity.this, WordGameActivity.class);
         startActivity(intent);
     }
 

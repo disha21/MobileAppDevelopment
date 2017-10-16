@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * Created by dishasoni on 10/12/17.
  */
@@ -59,6 +60,8 @@ public abstract class GameBoard {
         return list1;
 
     }
+
+
 
 
 }

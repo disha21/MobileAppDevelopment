@@ -36,6 +36,7 @@ import java.util.TreeSet;
 
 import edu.neu.madcourse.dishasoni.R;
 //import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
+import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
 
 
@@ -49,6 +50,7 @@ public class GameActivity extends Activity {
     public static MediaPlayer mMediaPlayer;
     private Handler mHandler = new Handler();
     private GameFragment mGameFragment;
+
     private static ControlFragment controlFragment;
     public static Vibrator vibrator;
     static int score = 0;
@@ -74,14 +76,13 @@ public class GameActivity extends Activity {
         setContentView(R.layout.activity_game);
         Intent in = getIntent();
         name = in.getStringExtra("name");
-        TextView  tv  = (TextView)findViewById(R.id.nameView);
-        tv.setText("Welcome" + name);
-        setTitle("Welcome" + name);
+
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
         controlFragment =  (ControlFragment)getFragmentManager()
                 .findFragmentById(R.id.fragment_game_controls);
         controlFragment.setGameFragement(mGameFragment);
+       // controlFragment.setGameActivity(gameActivity);
         boolean restore = getIntent().getBooleanExtra(KEY_RESTORE, false);
         if (restore) {
             String gameData = getPreferences(MODE_PRIVATE)
@@ -128,17 +129,19 @@ public class GameActivity extends Activity {
 
     }
 
+
+
     public void restartGame() {
         mGameFragment.restartGame();
 
     }
 
-    public static void checkWordScore(){
-        // controlFragment.clickedCheckWord = true;
-         controlFragment.showResult();
-
-
-    }
+//    public static void checkWordScore(){
+//        // controlFragment.clickedCheckWord = true;
+//         controlFragment.showResult();
+//
+//
+//    }
 
 
 
@@ -152,7 +155,7 @@ public class GameActivity extends Activity {
         mMediaPlayer = MediaPlayer.create(this, R.raw.frankum_loop001e);
         mMediaPlayer.setLooping(true);
         mMediaPlayer.start();
-        ControlFragment.timeInterval = time_remaining;
+
     }
 
 
@@ -163,6 +166,7 @@ public class GameActivity extends Activity {
         mMediaPlayer.stop();
         mMediaPlayer.reset();
         mMediaPlayer.release();
+        countDownTimer.cancel();
         String gameData = mGameFragment.getState();
         getPreferences(MODE_PRIVATE).edit()
                 .putString(PREF_RESTORE, gameData)
@@ -180,7 +184,6 @@ public class GameActivity extends Activity {
                 score = 20;
                 totalScorePhase1 += score;
             }
-
                 if (SetScore1.contains(word.charAt(0))) {
                     score = 1;
                     totalScorePhase1 += score;
@@ -209,10 +212,6 @@ public class GameActivity extends Activity {
                     score = 10;
                     totalScorePhase1 += score;
                 }
-
-
-
-
         }
         return totalScorePhase1;
 
