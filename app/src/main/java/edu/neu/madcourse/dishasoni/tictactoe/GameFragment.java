@@ -44,6 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.*;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.PREF_RESTORE;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
+import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
 
 
 import edu.neu.madcourse.dishasoni.R;
@@ -78,7 +79,7 @@ public class GameFragment extends Fragment {
 
     private View rootView;
 
-    private GameBoard gameBoard;
+    public static GameBoard gameBoard;
 
     private String gameData = "";
     private static String fileName  = "input_word_game";
@@ -211,7 +212,7 @@ public class GameFragment extends Fragment {
 //                                Log.d("indexes removed", indexes.toString());
                             } else {
                                 if(gameBoard.isValidMove(fLarge, fSmall)){
-                                    vibrator.vibrate(50);
+                                    vibrator.vibrate(500);
 //                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 150);
 //                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,250);
 //                                    mLastLarge = fLarge;
@@ -261,6 +262,7 @@ public class GameFragment extends Fragment {
         if(isPhase1){
             gameBoard = new Stage1Game();
         }
+        selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
         totalScorePhase1 = 0;
         Intent intent = new Intent(getActivity(), GameActivity.class);
         getActivity().startActivity(intent);

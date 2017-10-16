@@ -22,10 +22,14 @@ import android.view.ViewGroup;
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
 
+import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
+import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
+
 
 public class MainFragment extends Fragment {
 
    private AlertDialog mDialog;
+
 
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,10 +45,13 @@ public class MainFragment extends Fragment {
       newButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
-
+             selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
+             ControlFragment.foundWords.clear();
+             ControlFragment.notFoundWords.clear();
+             ControlFragment.searchWordInFile.clear();
+             totalScorePhase1 = 0;
              Intent intent = new Intent(getActivity(), GameActivity.class);
              getActivity().startActivity(intent);
-            
 
          }
       });

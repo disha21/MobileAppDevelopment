@@ -15,27 +15,23 @@
     <string name="ins_label">Instructions</string>
     <string name="about_text">\
 Scroggle is Boggle, but with an UTTT special twist.\n\
-        User find words and score points depending the letters choosen
+        User find words and score points depending the letters choosen.
+        Bonus points for selecting the 9 letter word.
 \n\
-A tie happens when there are no further moves.
-In the case of a tie in a small board, that will count as a win for
-both sides in the larger game.
+
 </string>
     <string name="ack_text">\
-This game is played just like
-regular Tic Tac Toe with one difference: to win a tile
-you have to win a smaller game of Tic Tac Toe inside that tile.\n\
-\n\
-A tie happens when there are no further moves.
-In the case of a tie in a small board, that will count as a win for
-both sides in the larger game.
+Sounds:https://www.dl-sounds.com/royalty-free/prelude-in-c \n
+        Background:https://www.google.com/search?q=scrabble+images&amp;rlz=1C5CHFA_enUS693US696&amp;tbm=isch&amp;tbo=u&amp;source=univ&amp;sa=X&amp;ved=0ahUKEwinjO2VwfTWAhVlrlQKHYmFCR0QsAQIJw&amp;biw=1280&amp;bih=659#imgrc=oBB8ku-g_2TNRM:
 </string>
 
     <string name="ins_text">\
-The game is divided into two phases.
+The game is divided into two phases.You can only select the letter that are connected left,right,diagonally.
 In the first phase select 9 words from each grid and click on check word to conform if the word exists.\n\
         Timer is set to 1 minute each for both the phases.
-\n\In the phase 2 select 1 word combining the correct words from phase1.
+\n\In the phase 2 select 1 word combining the correct words from phase1 from each grid.Select the words from the bigger
+        left,right or diagonally connected grid.
 Bonus 20 points for a 9 letter word
+        You will be penalised if a wrong word is selected(-2)
 </string>
 </resources>

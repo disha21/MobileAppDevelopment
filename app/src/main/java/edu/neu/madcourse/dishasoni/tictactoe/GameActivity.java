@@ -9,30 +9,14 @@
 package edu.neu.madcourse.dishasoni.tictactoe;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.CharArrayReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
 
 import edu.neu.madcourse.dishasoni.R;
 //import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
@@ -136,23 +120,12 @@ public class GameActivity extends Activity {
 
     }
 
-//    public static void checkWordScore(){
-//        // controlFragment.clickedCheckWord = true;
-//         controlFragment.showResult();
-//
-//
-//    }
-
-
-
-
-
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        mMediaPlayer = MediaPlayer.create(this, R.raw.frankum_loop001e);
+        mMediaPlayer = MediaPlayer.create(this, R.raw.asound_world);
         mMediaPlayer.setLooping(true);
         mMediaPlayer.start();
 

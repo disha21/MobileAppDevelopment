@@ -1,7 +1,9 @@
 package edu.neu.madcourse.dishasoni.tictactoe;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +15,14 @@ import java.util.Iterator;
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
 
+import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.notFoundWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
+import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
 
-public class GameScoreActivity extends AppCompatActivity {
-
+public class GameScoreActivity extends Activity {
+    public static MediaPlayer mMediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +63,28 @@ public class GameScoreActivity extends AppCompatActivity {
     }
 
     public void mainView(View view) {
+        ControlFragment.foundWords.clear();
+        ControlFragment.notFoundWords.clear();
+        ControlFragment.searchWordInFile.clear();
+        totalScorePhase1 = 0;
+        selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
         Intent intent = new Intent(GameScoreActivity.this, GameActivity.class);
         startActivity(intent);
+       // GameActivity.mMediaPlayer.stop();
+
+    }
+
+    protected void onPause() {
+        super.onPause();
+        ControlFragment.foundWords.clear();
+        ControlFragment.notFoundWords.clear();
+        ControlFragment.searchWordInFile.clear();
+        totalScorePhase1 = 0;
+        selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
+        Intent intent = new Intent(GameScoreActivity.this, GameActivity.class);
+        startActivity(intent);
+      //  GameActivity.mMediaPlayer.stop();
+
     }
 
 

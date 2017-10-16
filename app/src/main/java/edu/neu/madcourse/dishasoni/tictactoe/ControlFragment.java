@@ -76,6 +76,7 @@ public class ControlFragment extends Fragment {
     boolean phaseTwo = false;
     static long remainingTime = 0;
 
+
     //boolean isPhase1;
 
 
@@ -127,6 +128,7 @@ public class ControlFragment extends Fragment {
                                 gf.updateViewForPhase2();
                                 countDownTimer = new CountDownTimer(60000, 1000) {
                                     public void onTick(long millisUntilFinished) {
+                                        mTextField.setBackgroundColor(getResources().getColor(R.color.gray_color));
                                         mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
                                         remainingTime = (millisUntilFinished);
                                         if (millisUntilFinished < 10000) {
@@ -205,6 +207,7 @@ public class ControlFragment extends Fragment {
                         countDownTimer = new CountDownTimer(60000, 1000) {
                             public void onTick(long millisUntilFinished) {
                                 mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                                mTextField.setBackgroundColor(getResources().getColor(R.color.gray_color));
                                 remainingTime = (millisUntilFinished);
                                 if (millisUntilFinished < 10000) {
                                     //  Toast.makeText(getActivity().getApplicationContext(), "Hurry phase 1 is about to end !", Toast.LENGTH_SHORT).show();
@@ -241,6 +244,11 @@ public class ControlFragment extends Fragment {
             public void onClick(View view) {
 
                 if (isPaused) {
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.pause();
+                    }else{
+                        mMediaPlayer.start();
+                    }
                     gf.showGame();
                     Button pause = (Button) rootView.findViewById(R.id.pause);
                     pause.setText("PAUSE");
@@ -262,6 +270,7 @@ public class ControlFragment extends Fragment {
                             if (gf.isPhase1) {
                                 countDownTimer = new CountDownTimer(60000, 1000) {
                                     public void onTick(long millisUntilFinished) {
+                                        mTextField.setBackgroundColor(getResources().getColor(R.color.gray_color));
                                         mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
                                         remainingTime = (millisUntilFinished);
                                         if (millisUntilFinished < 10000) {
@@ -290,6 +299,11 @@ public class ControlFragment extends Fragment {
 
 
                 } else {
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.pause();
+                    }else{
+                        mMediaPlayer.start();
+                    }
 
                     countDownTimer.cancel();
                     gf.hideGame();
@@ -312,6 +326,21 @@ public class ControlFragment extends Fragment {
 
 
     public void moveToNewActivity() {
+        findIfWordsExists();
+        int finalScore = calculateScore();
+        int wrong = notFoundWords.size();
+        finalScore = finalScore - wrong * 2;
+        Log.d("finalScore:", String.valueOf(finalScore));
+        String right = "Right words:";
+        String wrongWords = "Wrong words:";
+        Iterator<String> itRight = foundWords.iterator();
+        while (itRight.hasNext()) {
+            right += itRight.next() + ",";
+        }
+        Iterator<String> itWrong = notFoundWords.iterator();
+        while (itWrong.hasNext()) {
+            wrongWords += itWrong.next() + ",";
+        }
         Intent i = new Intent(getActivity(), GameScoreActivity.class);
         startActivity(i);
         // ((Activity) getActivity()).overridePendingTransition(0,0);
@@ -361,8 +390,6 @@ public class ControlFragment extends Fragment {
         }
 
         alertBox1 = alert.show();
-
-        mMediaPlayer.stop();
 
     }
 
