@@ -107,6 +107,9 @@ public class ControlFragment extends Fragment {
         View checkWords = rootView.findViewById(R.id.checkWord);
         final View mute = rootView.findViewById(R.id.mute);
         final TextView mTextField = (TextView) rootView.findViewById(R.id.timer);
+        if(remainingTime > 0){
+            timeInterval = remainingTime;
+        }
         countDownTimer = new CountDownTimer(timeInterval, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -126,7 +129,7 @@ public class ControlFragment extends Fragment {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 gf.updateViewForPhase2();
-                                countDownTimer = new CountDownTimer(60000, 1000) {
+                                countDownTimer = new CountDownTimer(timeInterval, 1000) {
                                     public void onTick(long millisUntilFinished) {
                                         mTextField.setBackgroundColor(getResources().getColor(R.color.gray_color));
                                         mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
@@ -160,6 +163,8 @@ public class ControlFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
+                Intent intent = new Intent(getActivity(), WordGameActivity.class);
+                startActivity(intent);
             }
         });
         mute.setOnClickListener(new View.OnClickListener() {
@@ -204,7 +209,7 @@ public class ControlFragment extends Fragment {
                         int wrong = notFoundWords.size();
                         finalScore = finalScore - 2 * wrong;
 
-                        countDownTimer = new CountDownTimer(60000, 1000) {
+                        countDownTimer = new CountDownTimer(timeInterval, 1000) {
                             public void onTick(long millisUntilFinished) {
                                 mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
                                 mTextField.setBackgroundColor(getResources().getColor(R.color.gray_color));

@@ -85,8 +85,10 @@ public class Stage1Game extends GameBoard {
                 selectedWords[fLarge] = "";
             } else {
                 StringBuilder sb = new StringBuilder(selectedWords[fLarge]);
-                selectedWords[fLarge] = sb.substring(0, indexes.get(fLarge).size() - 1);
+                selectedWords[fLarge] = sb.substring(0, indexes.get(fLarge).size());
             }
+            Log.d("selected words", selectedWords[4]);
+            Log.d("linked list", indexes.toString());
             return true;
         }
         return false;

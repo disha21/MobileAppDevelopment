@@ -53,7 +53,7 @@ public class Stage2Game extends GameBoard {
                 word = "";
             } else {
                 StringBuilder sb = new StringBuilder(word);
-                word = sb.substring(0, indexes.size() - 1);
+                word = sb.substring(0, indexes.size());
             }
             return true;
 

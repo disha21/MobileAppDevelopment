@@ -189,55 +189,6 @@ public class GameActivity extends Activity {
         return totalScorePhase1;
 
     }
-
-
-    public void reportWinner(final Tile.Owner winner) {
-//      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//      if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-//         mMediaPlayer.stop();
-//         mMediaPlayer.reset();
-//         mMediaPlayer.release();
-//      }
-//      builder.setMessage(getString(R.string.declare_winner, winner));
-//      builder.setCancelable(false);
-//      builder.setPositiveButton(R.string.ok_label,
-//            new DialogInterface.OnClickListener() {
-//               @Override
-//               public void onClick(DialogInterface dialogInterface, int i) {
-//                  finish();
-//               }
-//            });
-//      final Dialog dialog = builder.create();
-//      mHandler.postDelayed(new Runnable() {
-//         @Override
-//         public void run() {
-//            mMediaPlayer = MediaPlayer.create(GameActivity.this,
-//                  winner == Tile.Owner.X ? R.raw.oldedgar_winner
-//                        : winner == Tile.Owner.O ? R.raw.notr_loser
-//                        : R.raw.department64_draw
-//            );
-//            mMediaPlayer.start();
-//            dialog.show();
-//         }
-//      }, 500);
-//
-//      // Reset the board to the initial position
-//      mGameFragment.initGame();
-    }
-
-//    public void startThinking() {
-//        View thinkView = findViewById(R.id.thinking);
-//        thinkView.setVisibility(View.VISIBLE);
-//    }
-//
-//    public void stopThinking() {
-//        View thinkView = findViewById(R.id.thinking);
-//        thinkView.setVisibility(View.GONE);
-//    }
-
-
-
-
 }
 
 

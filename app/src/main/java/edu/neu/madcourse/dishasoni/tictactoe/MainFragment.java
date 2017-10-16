@@ -50,6 +50,14 @@ public class MainFragment extends Fragment {
              ControlFragment.notFoundWords.clear();
              ControlFragment.searchWordInFile.clear();
              totalScorePhase1 = 0;
+
+             if( ControlFragment.remainingTime > 0 ){
+
+                 ControlFragment.countDownTimer.cancel();
+             }
+             ControlFragment.remainingTime = 0;
+
+
              Intent intent = new Intent(getActivity(), GameActivity.class);
              getActivity().startActivity(intent);
 

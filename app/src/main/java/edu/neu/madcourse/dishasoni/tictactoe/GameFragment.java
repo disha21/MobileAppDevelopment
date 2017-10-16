@@ -189,12 +189,20 @@ public class GameFragment extends Fragment {
                 final Tile smallTile = mSmallTiles[large][small];
                 smallTile.setView(inner);
                 if (isRestore) {
-                    if (mSmallTiles[fLarge][fSmall].getOwner() == Tile.Owner.SELECTED) {
+                    if (mSmallTiles[fLarge][fSmall].getOwner().equals(Tile.Owner.SELECTED)) {
                         inner.setBackgroundColor(getResources().getColor(R.color.blue_color));
                     }
-                    if(mSmallTiles[fLarge][fSmall].getOwner() == (Tile.Owner.DONE)){
+                    if(mSmallTiles[fLarge][fSmall].getOwner().equals((Tile.Owner.DONE))){
                         inner.setText("");
                         inner.setBackgroundColor(getResources().getColor(R.color.gray_color));
+                    }
+                    if(isPhase1){
+
+                    }else{
+                        if(mSmallTiles[fLarge][fSmall].getOwner().equals((Tile.Owner.UNSELECTED))){
+                            inner.setText("");
+                            inner.setBackgroundColor(getResources().getColor(R.color.gray_color));
+                        }
                     }
 
                 }
@@ -255,15 +263,19 @@ public class GameFragment extends Fragment {
     }
 
     public void restartGame() {
+
         ControlFragment.foundWords.clear();
         ControlFragment.notFoundWords.clear();
         ControlFragment.searchWordInFile.clear();
+        ControlFragment.countDownTimer.cancel();
+        ControlFragment.remainingTime = 0;
 
         if(isPhase1){
             gameBoard = new Stage1Game();
         }
         selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
         totalScorePhase1 = 0;
+        getActivity().finish();
         Intent intent = new Intent(getActivity(), GameActivity.class);
         getActivity().startActivity(intent);
         GameActivity.mMediaPlayer.stop();
@@ -393,6 +405,11 @@ public class GameFragment extends Fragment {
      */
     public String getState() {
         StringBuilder builder = new StringBuilder();
+        if(isPhase1)
+            builder.append("Stage=true");
+        else
+            builder.append("Stage=false");
+        builder.append("&");
         builder.append(mLastLarge);
         builder.append(',');
         builder.append(mLastSmall);
@@ -403,6 +420,8 @@ public class GameFragment extends Fragment {
                 builder.append(',');
             }
         }
+        builder.append("&");
+        builder.append("timer=5");
         Log.d("out", builder.toString());
         return builder.toString();
     }
@@ -411,7 +430,8 @@ public class GameFragment extends Fragment {
      * Restore the state of the game from the given string.
      */
     public void putState(String gameData) {
-        String[] fields = gameData.split(",");
+        String[] outerFields = gameData.split("&");
+        String[] fields = outerFields[1].split(",");
         int index = 0;
         mLastLarge = Integer.parseInt(fields[index++]);
         mLastSmall = Integer.parseInt(fields[index++]);
@@ -419,12 +439,22 @@ public class GameFragment extends Fragment {
             for (int small = 0; small < 9; small++) {
                 Tile.Owner owner = Tile.Owner.valueOf(fields[index++]);
                 mSmallTiles[large][small].setOwner(owner);
-
             }
+        }
+
+        Long timer = Long.valueOf(outerFields[2].split("=")[1]);
+        ControlFragment.remainingTime = timer;
+        String phase1 = outerFields[0].split("=")[1];
+
+        if(phase1.equals("true")){
+            updateView();
+        } else {
+            //Phase 2...
+            updateViewForPhase2();
         }
         //  setAvailableFromLastMove(mLastSmall);
         updateAllTiles();
-         updateView();
+
     }
 
 

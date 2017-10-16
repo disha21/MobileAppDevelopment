@@ -15,7 +15,7 @@ import java.util.Iterator;
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
 
-import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
+//import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.notFoundWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
@@ -68,10 +68,9 @@ public class GameScoreActivity extends Activity {
         ControlFragment.searchWordInFile.clear();
         totalScorePhase1 = 0;
         selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
-        Intent intent = new Intent(GameScoreActivity.this, GameActivity.class);
+        this.finish();
+        Intent intent = new Intent(this, WordGameActivity.class);
         startActivity(intent);
-       // GameActivity.mMediaPlayer.stop();
-
     }
 
     protected void onPause() {
@@ -81,9 +80,9 @@ public class GameScoreActivity extends Activity {
         ControlFragment.searchWordInFile.clear();
         totalScorePhase1 = 0;
         selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
-        Intent intent = new Intent(GameScoreActivity.this, GameActivity.class);
+        this.finish();
+        Intent intent = new Intent(this, WordGameActivity.class);
         startActivity(intent);
-      //  GameActivity.mMediaPlayer.stop();
 
     }
 
