@@ -15,8 +15,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
+import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import edu.neu.madcourse.dishasoni.R;
 //import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
@@ -29,12 +32,13 @@ import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
 
 
 public class GameActivity extends Activity {
+
     public static final String KEY_RESTORE = "key_restore";
     public static final String PREF_RESTORE = "pref_restore";
+    public static final String USER = "user";
     public static MediaPlayer mMediaPlayer;
     private Handler mHandler = new Handler();
     private GameFragment mGameFragment;
-
     private static ControlFragment controlFragment;
     public static Vibrator vibrator;
     static int score = 0;
@@ -47,20 +51,23 @@ public class GameActivity extends Activity {
     static HashSet<Character> SetScore8 = new HashSet<Character>();
     static HashSet<Character> SetScore10 = new HashSet<Character>();
     long time_remaining = 0;
-    String name;
+
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         AddToSets();
         setContentView(R.layout.activity_game);
-        Intent in = getIntent();
-        name = in.getStringExtra("name");
-
+        Bundle bundle = getIntent().getExtras();
+        String user = bundle.getString("name", "");
+        TextView tv = (TextView) findViewById(R.id.username);
+        if(user != "")
+            tv.setText("Welcome" + user);
+        else
+            tv.setText("Welcome Guest");
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
         controlFragment =  (ControlFragment)getFragmentManager()
@@ -75,8 +82,6 @@ public class GameActivity extends Activity {
                 mGameFragment.putState(gameData);
             }
         }
-
-
         Log.d("UT3", "restore = " + restore);
     }
 
@@ -114,13 +119,9 @@ public class GameActivity extends Activity {
     }
 
 
-
     public void restartGame() {
         mGameFragment.restartGame();
-
     }
-
-
 
     @Override
     protected void onResume() {
@@ -130,7 +131,6 @@ public class GameActivity extends Activity {
         mMediaPlayer.start();
 
     }
-
 
     @Override
     protected void onPause() {
@@ -157,34 +157,36 @@ public class GameActivity extends Activity {
                 score = 20;
                 totalScorePhase1 += score;
             }
-                if (SetScore1.contains(word.charAt(0))) {
+            for (char ch: word.toCharArray()) {
+                if (SetScore1.contains(ch)) {
                     score = 1;
                     totalScorePhase1 += score;
                 }
-                if (SetScore2.contains(word.charAt(0))) {
+                if (SetScore2.contains(ch)) {
                     score = 3;
                     totalScorePhase1 += score;
                 }
-                if (SetScore3.contains(word.charAt(0))) {
+                if (SetScore3.contains(ch)) {
                     score = 3;
                     totalScorePhase1 += score;
                 }
-                if (SetScore4.contains(word.charAt(0))) {
+                if (SetScore4.contains(ch)) {
                     score = 4;
                     totalScorePhase1 += score;
                 }
-                if (SetScore5.contains(word.charAt(0))) {
+                if (SetScore5.contains(ch)) {
                     score = 5;
                     totalScorePhase1 += score;
                 }
-                if (SetScore8.contains(word.charAt(0))) {
+                if (SetScore8.contains(ch)) {
                     score = 8;
                     totalScorePhase1 += score;
                 }
-                if (SetScore10.contains(word.charAt(0))) {
+                if (SetScore10.contains(ch)) {
                     score = 10;
                     totalScorePhase1 += score;
                 }
+            }
         }
         return totalScorePhase1;
 

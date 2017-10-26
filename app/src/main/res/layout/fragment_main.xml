@@ -66,4 +66,28 @@
        android:layout_margin="@dimen/menu_button_margin"
        android:padding="@dimen/menu_button_padding"
        android:text="@string/ins_label"/>
+   <Button
+       android:id="@+id/leader_button"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_gravity="center"
+       android:layout_margin="@dimen/menu_button_margin"
+       android:padding="@dimen/menu_button_padding"
+       android:text="LeaderBoard"/>
+   <Button
+       android:id="@+id/score_button"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_gravity="center"
+       android:layout_margin="@dimen/menu_button_margin"
+       android:padding="@dimen/menu_button_padding"
+       android:text="ScoreBoard"/>
+   <Button
+       android:id="@+id/notification_button"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_gravity="center"
+       android:layout_margin="@dimen/menu_button_margin"
+       android:padding="@dimen/menu_button_padding"
+       android:text="Notifications"/>
 </LinearLayout>

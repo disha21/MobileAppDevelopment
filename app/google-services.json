@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "826773053583",
+    "firebase_url": "https://hello-mad.firebaseio.com",
+    "project_id": "hello-mad",
+    "storage_bucket": "hello-mad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826773053583:android:ab317b80fb63d06a",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.dishasoni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826773053583-ga11hmum0pb1l5ukbr7fe5juseqresfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.neu.madcourse.dishasoni",
+            "certificate_hash": "2775b3f72842fce4fd072ab29c7d89cf9a26bc18"
+          }
+        },
+        {
+          "client_id": "826773053583-rhe2l5do3s9123mbgkfho413qpfonjf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk3bOpAaGQkQXKMkBfWGKHRZvwXFCKqGY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826773053583-rhe2l5do3s9123mbgkfho413qpfonjf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

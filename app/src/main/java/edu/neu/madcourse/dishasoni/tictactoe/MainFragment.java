@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
+//import edu.neu.madcourse.dishasoni.tictactoe.fcm.MainFCMActivity;
 
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
 import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
@@ -36,12 +37,23 @@ public class MainFragment extends Fragment {
                             Bundle savedInstanceState) {
       View rootView =
             inflater.inflate(R.layout.fragment_main, container, false);
-      // Handle buttons here...
-      View newButton = rootView.findViewById(R.id.new_button);
-      View continueButton = rootView.findViewById(R.id.continue_button);
-      View aboutButton = rootView.findViewById(R.id.about_button);
-      View ackButton = rootView.findViewById(R.id.ack_button);
-      View insButton = rootView.findViewById(R.id.ins_button);
+          // Handle buttons here...
+          View newButton = rootView.findViewById(R.id.new_button);
+          View continueButton = rootView.findViewById(R.id.continue_button);
+          View aboutButton = rootView.findViewById(R.id.about_button);
+          View ackButton = rootView.findViewById(R.id.ack_button);
+          View insButton = rootView.findViewById(R.id.ins_button);
+          View scoreButton = rootView.findViewById(R.id.score_button);
+          View leaderButton = rootView.findViewById(R.id.leader_button);
+      // View notificationButton  = rootView.findViewById(R.id.notification_button);
+
+//       notificationButton.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//               startActivity(new Intent(getActivity(), MainFCMActivity.class));
+//           }
+//       });
+
       newButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
@@ -57,9 +69,12 @@ public class MainFragment extends Fragment {
              }
              ControlFragment.remainingTime = 0;
 
-
+             Bundle bundle = getActivity().getIntent().getExtras();
+             String user = bundle.getString("name", "");
              Intent intent = new Intent(getActivity(), GameActivity.class);
+             intent.putExtra("name",user);
              getActivity().startActivity(intent);
+
 
          }
       });
@@ -71,6 +86,25 @@ public class MainFragment extends Fragment {
             getActivity().startActivity(intent);
          }
       });
+
+       scoreButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Bundle bundle = getActivity().getIntent().getExtras();
+               String user = bundle.getString("name", "");
+               Intent intent = new Intent(getActivity(), ScoreBoardActivity.class);
+               intent.putExtra("name",user);
+               getActivity().startActivity(intent);
+           }
+       });
+
+       leaderButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(getActivity(), LeadeBoardActivity.class);
+               getActivity().startActivity(intent);
+           }
+       });
       aboutButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {

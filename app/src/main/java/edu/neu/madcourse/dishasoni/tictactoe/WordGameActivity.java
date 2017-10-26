@@ -24,9 +24,12 @@ public class WordGameActivity extends Activity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.ativity_main_tictactoe);
-      Intent in =  new Intent(WordGameActivity.this,GameActivity.class);
-      String name = in.getStringExtra("name");
-      in.putExtra("name", name);
+      Bundle bundle = getIntent().getExtras();
+      String user = bundle.getString("name", "");
+    //  Intent in =  new Intent(WordGameActivity.this,GameActivity.class);
+   //   String name = in.getStringExtra("name");
+      //  in.putExtra("name", user);
+       // startActivity(in);
       setTitle("Welcome to Word Game");
    }
 

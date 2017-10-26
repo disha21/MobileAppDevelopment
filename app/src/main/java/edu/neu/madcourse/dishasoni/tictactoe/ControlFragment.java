@@ -347,8 +347,10 @@ public class ControlFragment extends Fragment {
             wrongWords += itWrong.next() + ",";
         }
         Intent i = new Intent(getActivity(), GameScoreActivity.class);
+        TextView tv = (TextView) getActivity().findViewById(R.id.username);
+        i.putExtra("name",tv.getText().toString());
         startActivity(i);
-        // ((Activity) getActivity()).overridePendingTransition(0,0);
+
 
     }
 

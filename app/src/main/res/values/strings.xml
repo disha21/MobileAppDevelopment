@@ -34,4 +34,25 @@ In the first phase select 9 words from each grid and click on check word to conf
 Bonus 20 points for a 9 letter word
         You will be penalised if a wrong word is selected(-2)
 </string>
+    <string name="quickstart_message">The InstanceID button logs the token to the log. The Send Notification Button sends the notification to the client device.</string>
+    <string name="send_notification">Send Notification</string>
+    <string name="log_token">Show Token</string>
+
+
+    <string name="msg_subscribed">Subscribed to scroggle topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="go_to_fcm_demo">Cloud Messaging Example</string>
+    <string name="go_to_realtime_database_demo">Realtime Database Example</string>
+
+    <string name="username">User Name</string>
+    <string name="score">Score</string>
+
+    <string name="add5">Add 5</string>
+    <string name="send_notification_text">Send Android Notification</string>
+    <string name="subscribe_to_news">Subscribe to \"News\"</string>
+    <string name="send_message_to_news">Send Message to News Topic</string>
+    <string name="start_notification_act">Notification Example</string>
+
+    <string name="start_permissions_act">Permissions Example</string>
 </resources>
