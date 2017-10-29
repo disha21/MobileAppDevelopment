@@ -9,12 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,8 +30,11 @@ import java.util.Map;
 
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
+import edu.neu.madcourse.dishasoni.tictactoe.fcm.FCMActivity;
+import edu.neu.madcourse.dishasoni.tictactoe.fcm.SendNotification;
 
 //import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
+import static android.R.attr.data;
 import static android.content.ContentValues.TAG;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.notFoundWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.SetScore1;
@@ -41,7 +48,7 @@ import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
 
-public class GameScoreActivity extends Activity {
+public class GameScoreActivity extends Activity  {
     static Map<String,Integer> wordScoreMap = new HashMap<String, Integer>();
     int score = 0;
     int wordScore = 0;
@@ -49,6 +56,7 @@ public class GameScoreActivity extends Activity {
     private DatabaseReference mDatabase;
     String user = "";
     int finalScore = 0;
+    View type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +65,9 @@ public class GameScoreActivity extends Activity {
         setTitle("Game Ended");
         Bundle bundle = getIntent().getExtras();
         user = bundle.getString("name", "");
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
         mDatabase = FirebaseDatabase.getInstance().getReference();
+      //  Toast.makeText(getApplicationContext(), "Subscribed !", Toast.LENGTH_SHORT).show();
         finalScore = totalScorePhase1;
         int wrong = notFoundWords.size();
         finalScore = finalScore - wrong * 2;
@@ -101,7 +111,7 @@ public class GameScoreActivity extends Activity {
         totalScorePhase1 = 0;
         selectedWords  = new String[]{"", "", "", "", "", "", "", "", ""};
         this.finish();
-        Intent intent = new Intent(this, WordGameActivity.class);
+        Intent intent = new Intent(GameScoreActivity.this, WordGameActivity.class);
         startActivity(intent);
     }
 
@@ -183,24 +193,51 @@ public class GameScoreActivity extends Activity {
         String username  = user.substring(7).toLowerCase();
         User userData = new User(username,score);
         mDatabase.child("users").child(userData.getUserName()).push().setValue(userData.getScores());
+//        mDatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+////                String value = dataSnapshot.getValue(String.class);
+////                Log.d(TAG, "Value is: " + value);
+//
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d("new user added","new user added");
+                User userVal = dataSnapshot.getValue(User.class);
+                SendNotification notify  = new SendNotification();
+                notify.sendNotification();
+             //
+
 
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-       });
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+
     }
 
 

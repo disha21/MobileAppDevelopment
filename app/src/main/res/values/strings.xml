@@ -37,6 +37,7 @@ Bonus 20 points for a 9 letter word
     <string name="quickstart_message">The InstanceID button logs the token to the log. The Send Notification Button sends the notification to the client device.</string>
     <string name="send_notification">Send Notification</string>
     <string name="log_token">Show Token</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 
     <string name="msg_subscribed">Subscribed to scroggle topic</string>

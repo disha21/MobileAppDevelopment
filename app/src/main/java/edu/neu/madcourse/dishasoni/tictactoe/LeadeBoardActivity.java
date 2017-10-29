@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class LeadeBoardActivity extends AppCompatActivity {
         DatabaseReference ref = database.getReference("/users/");
 
 // Attach a listener to read the data at our posts reference
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,6 +52,9 @@ public class LeadeBoardActivity extends AppCompatActivity {
                 }
                 createScoreTable();
             }
+
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -107,6 +112,8 @@ public class LeadeBoardActivity extends AppCompatActivity {
                 row.addView(tv4);
 
                 userScores.addView(row);
+            }else{
+                break;
             }
 
         }

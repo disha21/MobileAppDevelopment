@@ -7,12 +7,11 @@
     tools:context="edu.neu.madcourse.dishasoni.tictactoe.LeadeBoardActivity">
 
     <LinearLayout
+        android:id="@+id/leader_layout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-       >
-
+        android:orientation="vertical">
 
         <TableLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,12 +20,13 @@
             android:layout_height="wrap_content"
             android:shrinkColumns="*"
             android:stretchColumns="*"
-            android:background="#ffffff">
+            android:background="#ffaa81">
 
             <TableRow
                 android:id="@+id/tableRow2"
                 android:layout_height="0dp"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                >
                 <TextView
                     android:text="user"
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:shrinkColumns="*"
             android:stretchColumns="*"
-            android:background="#ffffff">
+            android:background="#ffaa81">
         </TableLayout>
 
     </LinearLayout>

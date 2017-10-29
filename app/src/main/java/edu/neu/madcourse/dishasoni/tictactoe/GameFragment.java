@@ -49,6 +49,7 @@ import static edu.neu.madcourse.dishasoni.tictactoe.Stage1Game.selectedWords;
 
 import edu.neu.madcourse.dishasoni.R;
 
+
 public class GameFragment extends Fragment {
     static private int mLargeIds[] = {R.id.large1, R.id.large2, R.id.large3,
             R.id.large4, R.id.large5, R.id.large6, R.id.large7, R.id.large8,
@@ -61,6 +62,7 @@ public class GameFragment extends Fragment {
     private Tile mLargeTiles[] = new Tile[9];
     private Tile mSmallTiles[][] = new Tile[9][9];
    private Tile.Owner mPlayer = Tile.Owner.UNSELECTED;
+
     private Set<Tile> mAvailable = new HashSet<Tile>();
     private int mSoundX, mSoundO, mSoundMiss, mSoundRewind;
     private SoundPool mSoundPool;
@@ -68,6 +70,7 @@ public class GameFragment extends Fragment {
     private int mLastLarge;
     private int mLastSmall;
     private List<String> words = new ArrayList<String>();
+
     private int[] lastMove = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
     public static String selectedWord = "";
 //    public static String[] selectedWords = {"", "", "", "", "", "", "", "", ""};
@@ -148,6 +151,7 @@ public class GameFragment extends Fragment {
 
         initViews(rootView);
         updateAllTiles();
+
 
         return rootView;
     }
@@ -249,6 +253,8 @@ public class GameFragment extends Fragment {
 
             }
         }
+
+
     }
 
 

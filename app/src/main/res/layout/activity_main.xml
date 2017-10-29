@@ -14,7 +14,8 @@
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="0.9">
+            android:layout_weight="0.9"
+            android:background="@drawable/app3">
 
 
             <LinearLayout
@@ -28,32 +29,32 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="AboutMe"
-                    android:text="About"></Button>
+                    android:text="About"
+                    android:background="@color/available_color"></Button>
 
                 <Button
                     android:id="@+id/ErrorButton"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="GenerateError"
-                    android:text="Generate Error"></Button>
+                    android:text="Generate Error"
+                    android:background="@color/available_color">
+                </Button>
                 <Button
                     android:id="@+id/DictionaryButton"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="DictionaryActivity"
-                    android:text="Dictionary"></Button>
+                    android:text="Dictionary"
+                    android:background="@color/available_color"></Button>
                 <Button
                     android:id="@+id/WordGame"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="ScroggleActivity"
-                    android:text="Word Game"></Button>
-                <Button
-                    android:id="@+id/tictacToe"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="WordGameActivity"
-                    android:text="Tic Tac Toe"></Button>
+                    android:text="Word Game"
+                    android:background="@color/available_color"></Button>
+
 
             </LinearLayout>
 

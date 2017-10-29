@@ -1,13 +1,15 @@
 package edu.neu.madcourse.dishasoni.tictactoe;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Created by dishasoni on 10/22/17.
  */
 
-public class Score {
+public class Score implements Comparator<Score>{
     private String date;
     private Integer finalScore;
     private String word;
@@ -57,5 +59,14 @@ public class Score {
     public String getHighestWordScore() {
         return highestWordScore;
     }
+
+    @Override
+    public int compare(Score score1, Score score2) {
+
+       return (score2.getFinalScore() - score1.getFinalScore());
+
+    }
+
+
 
 }

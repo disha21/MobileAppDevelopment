@@ -17,11 +17,14 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.widget.TextView;
 
+
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 import edu.neu.madcourse.dishasoni.R;
+import edu.neu.madcourse.dishasoni.tictactoe.fcm.FCMActivity;
 //import static edu.neu.madcourse.dishasoni.tictactoe.GameFragment.selectedWords;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.countDownTimer;
 import static edu.neu.madcourse.dishasoni.tictactoe.ControlFragment.foundWords;
@@ -41,6 +44,8 @@ public class GameActivity extends Activity {
     private GameFragment mGameFragment;
     private static ControlFragment controlFragment;
     public static Vibrator vibrator;
+
+
     static int score = 0;
     static int totalScorePhase1 = 0;
     static HashSet<Character> SetScore1 = new HashSet<Character>();
@@ -64,7 +69,7 @@ public class GameActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
         String user = bundle.getString("name", "");
         TextView tv = (TextView) findViewById(R.id.username);
-        if(user != "")
+        if(user.trim().length() > 0 )
             tv.setText("Welcome" + user);
         else
             tv.setText("Welcome Guest");
@@ -83,6 +88,9 @@ public class GameActivity extends Activity {
             }
         }
         Log.d("UT3", "restore = " + restore);
+
+       // FirebaseMessaging.getInstance().subscribeToTopic("news");
+
     }
 
     public void AddToSets() {

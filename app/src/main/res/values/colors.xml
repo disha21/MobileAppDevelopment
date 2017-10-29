@@ -12,6 +12,7 @@
     <color name="purple_color">#7f007f</color>
     <color name="red_color">#ff7f7f</color>
     <color name="yellow_color">#FFFF00</color>
+    <color name="back_color">#ffaa81</color>
 
     <color name="thinking_background_color">#cfdfdfdf</color>
 </resources>

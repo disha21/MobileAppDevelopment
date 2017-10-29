@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 
 import edu.neu.madcourse.dishasoni.MainActivity;
 import edu.neu.madcourse.dishasoni.R;
+import edu.neu.madcourse.dishasoni.tictactoe.fcm.FCMActivity;
+
 //import edu.neu.madcourse.dishasoni.tictactoe.fcm.MainFCMActivity;
 
 import static edu.neu.madcourse.dishasoni.tictactoe.GameActivity.totalScorePhase1;
@@ -45,14 +47,14 @@ public class MainFragment extends Fragment {
           View insButton = rootView.findViewById(R.id.ins_button);
           View scoreButton = rootView.findViewById(R.id.score_button);
           View leaderButton = rootView.findViewById(R.id.leader_button);
-      // View notificationButton  = rootView.findViewById(R.id.notification_button);
+       View notificationButton  = rootView.findViewById(R.id.notification_button);
 
-//       notificationButton.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//               startActivity(new Intent(getActivity(), MainFCMActivity.class));
-//           }
-//       });
+       notificationButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               startActivity(new Intent(getActivity(), FCMActivity.class));
+           }
+       });
 
       newButton.setOnClickListener(new View.OnClickListener() {
          @Override
