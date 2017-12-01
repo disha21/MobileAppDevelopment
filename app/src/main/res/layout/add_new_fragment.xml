@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
+    android:paddingBottom="20dp"
+    android:id="@+id/linearLayout">
+    <fragment
+    android:id="@+id/place_autocomplete_fragment1"
+    android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
+
+
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:paddingBottom="40dp"/>
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location Address"
+        android:gravity="center_horizontal"
+        android:paddingBottom="30dp"
+
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="20dp">
+    <EditText
+        android:id="@+id/viewTextLocationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter Location Name"
+        android:gravity="left"
+        android:paddingRight="20dp"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:inputType="text"
+        />
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/array_ringing_mode"
+        android:gravity="left"
+
+        android:background="@drawable/spinner_item_layout"
+
+        />
+
+</LinearLayout>
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="center"
+        android:background="@color/available_color"
+
+       />
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

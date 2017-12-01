@@ -11,17 +11,23 @@ import java.util.List;
 public class User {
 
     private String userName;
-   // public List<Score> scores = new ArrayList<Score>();
-   private Score scores ;
-
+    private Score scores ;
     private User() {}
 
-    public User(String userName,Score scores){
+    public void setScores(Score scores) {
+        this.scores = scores;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public User(String userName, Score scores){
         this.userName = userName;
         this.scores = scores;
-      //  this.scores = scores;
 
     }
+
     public String getUserName() {
         return userName;
     }

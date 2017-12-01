@@ -24,43 +24,69 @@
 
             <TableRow
                 android:id="@+id/tableRow2"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 >
                 <TextView
-                    android:text="user"
-                    android:layout_width="wrap_content"
+                    android:text="User"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" android:background="#dcdcdc"
+                    android:layout_weight="1" android:background="#7fbf7f"
                     android:textColor="#000000"
-                    android:padding="20dip" android:gravity="center"/>
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"
+                    android:gravity="center"/>
 
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="score"
-                    android:layout_weight="1" android:background="#dcdcdc"
+                    android:layout_weight="1" android:background="#7fbf7f"
                     android:textColor="#000000"
-                    android:padding="20dip" android:gravity="left"/>
+                    android:gravity="center"
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"/>
 
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="Date"
-                    android:layout_weight="1" android:background="#dcdcdc"
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1" android:background="#7fbf7f"
                     android:textColor="#000000"
-                    android:padding="20dip" android:gravity="left"/>
+                    android:gravity="center"/>
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="Word"
-                    android:layout_weight="1" android:background="#dcdcdc"
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1" android:background="#7fbf7f"
                     android:textColor="#000000"
-                    android:padding="20dip" android:gravity="left"/>
+                    android:gravity="center"/>
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="WordScore"
-                    android:layout_weight="1" android:background="#dcdcdc"
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1" android:background="#7fbf7f"
                     android:textColor="#000000"
-                    android:padding="20dip" android:gravity="left"/>
-
+                    android:gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:paddingTop="20dip"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1" android:background="#7fbf7f"
+                    android:textColor="#000000"
+                    android:gravity="center"/>
             </TableRow>
 
         </TableLayout>
@@ -69,7 +95,8 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/table_leader_score_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:shrinkColumns="*"
             android:stretchColumns="*"
             android:background="#ffaa81">

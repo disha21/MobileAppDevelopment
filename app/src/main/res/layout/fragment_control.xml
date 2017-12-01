@@ -11,23 +11,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    >
    <LinearLayout
+       android:layout_marginTop="10dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal"
-       android:layout_gravity="bottom|left"
        android:weightSum="1">
       <Button
           android:id="@+id/restart"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text ="@string/restart_label"
+          android:layout_gravity="center"
+          android:layout_marginRight="10dip"
+          android:background="@color/available_color"
           android:drawableTop="@drawable/restart"
           />
       <Button
           android:id="@+id/home"
           android:layout_width="wrap_content"
+          android:background="@color/back_color"
+          android:layout_marginRight="10dip"
           android:layout_height="wrap_content"
           android:text ="@string/main_menu_label"
           android:drawableTop="@drawable/home"
@@ -37,11 +43,14 @@
           android:id="@+id/pause"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginRight="10dip"
+          android:background="@color/available_color"
           android:text ="Pause"
           android:drawableTop="@drawable/pause_play"
           />
    </LinearLayout>
    <LinearLayout
+       android:layout_marginTop="30dp"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal"
@@ -52,17 +61,23 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:text ="TIMER :XX:XX"
+          android:layout_marginRight="10dip"
+          android:background="@color/back_color"
           />
       <Button
           android:id="@+id/mute"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
+          android:background="@color/available_color"
+          android:layout_marginRight="10dip"
           android:text ="MUTE"
           />
       <Button
           android:id="@+id/checkWord"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
+          android:background="@color/back_color"
+          android:layout_marginRight="10dip"
           android:text ="Check Word"
           android:onClick="checkWords"
           />

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,17 +26,22 @@ import java.util.List;
 import java.util.Map;
 
 import edu.neu.madcourse.dishasoni.R;
+import edu.neu.madcourse.dishasoni.tictactoe.fcm.SendNotification;
 
 public class LeadeBoardActivity extends AppCompatActivity {
 
     String userName = "";
-    Map<String,List<Score>> userScoreMapping = new HashMap<String,List<Score>>();
+    String token = "";
+    Map<String, List<Score>> userScoreMapping = new HashMap<String, List<Score>>();
     int count = 0;
+    String sender = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leade_board);
+//        Bundle bundle = getIntent().getExtras();
+//        sender = bundle.getString("name", "");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("/users/");
 
@@ -54,8 +62,6 @@ public class LeadeBoardActivity extends AppCompatActivity {
             }
 
 
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
@@ -68,9 +74,9 @@ public class LeadeBoardActivity extends AppCompatActivity {
     protected void createScoreTable() {
         TableLayout userScores = (TableLayout) findViewById(R.id.table_leader_score_layout);
         Iterator it = userScoreMapping.entrySet().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             count++;
-            if(count <11) {
+            if (count < 11) {
                 Map.Entry pair = (Map.Entry) it.next();
                 userName = pair.getKey().toString();
                 Score userMaxScore = findMaxUSerScore((List) pair.getValue());
@@ -86,6 +92,23 @@ public class LeadeBoardActivity extends AppCompatActivity {
                 TextView tv2 = new TextView(this);
                 TextView tv3 = new TextView(this);
                 TextView tv4 = new TextView(this);
+                ImageButton btn = new ImageButton(this);
+                btn.setBackgroundResource(R.drawable.clap);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TableRow tablerow = (TableRow)v.getParent();
+                        TextView sample = (TextView) tablerow.getChildAt(0);
+                        String user=sample.getText().toString().trim();
+                        SendMessage(user);
+
+
+
+                    }
+
+
+                });
+
                 tvUser.setText(userName);
                 tv1.setText(userMaxScore.getFinalScore().toString());
                 tv2.setText(userMaxScore.getDate().substring(0, 10));
@@ -110,38 +133,57 @@ public class LeadeBoardActivity extends AppCompatActivity {
                 row.addView(tv2);
                 row.addView(tv3);
                 row.addView(tv4);
+                row.addView(btn);
 
                 userScores.addView(row);
-            }else{
+
+
+            } else {
                 break;
             }
 
         }
-
-
-
-
-
-
-
     }
 
-    protected Score findMaxUSerScore(List<Score> scoreList)
-    {
+
+    protected void SendMessage(String receiver) {
+        final FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+        DatabaseReference ref2 = database2.getReference("/registeredUsers/" + receiver);
+        final SendNotification notify = new SendNotification();
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Str registerUser = dataSnapshot.getValue(RegisterUser.class);
+//                        token  = registerUser.getRegistrationId();
+                String token = (String)dataSnapshot.getValue();
+
+
+                    SendNotification message = new SendNotification();
+                    notify.sendToDevice(token);
+
+                }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    protected Score findMaxUSerScore(List<Score> scoreList) {
         int maxScore = 0;
         int listIndex = 0;
         Score userMaxScore = new Score();
 
         for (int i = 0; i < scoreList.size(); i++) {
             int sc = scoreList.get(i).getFinalScore();
-            if(sc > maxScore){
+            if (sc > maxScore) {
                 maxScore = sc;
                 listIndex = i;
             }
-             userMaxScore = new Score(scoreList.get(listIndex).getDate(),
-                    scoreList.get(listIndex).getFinalScore(),scoreList.get(listIndex).getWord(),scoreList.get(listIndex).getHighestWordScore());
-
-
+            userMaxScore = new Score(scoreList.get(listIndex).getDate(),
+                    scoreList.get(listIndex).getFinalScore(), scoreList.get(listIndex).getWord(), scoreList.get(listIndex).getHighestWordScore());
 
 
         }

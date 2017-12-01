@@ -3,14 +3,35 @@
     package="edu.neu.madcourse.dishasoni">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <permission
+        android:name="android.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    <permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:protectionLevel="signature" />
 
     <application
+        android:name=".tictactoe.HelloMad"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="NUMAD17F_DishaSoni"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCk3bOpAaGQkQXKMkBfWGKHRZvwXFCKqGY" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +50,7 @@
         <activity android:name=".tictactoe.GameScoreActivity" />
         <activity android:name=".tictactoe.ScoreBoardActivity" />
         <activity android:name=".tictactoe.LeadeBoardActivity" />
-         <activity android:name=".tictactoe.fcm.FCMActivity" />
+        <activity android:name=".tictactoe.fcm.FCMActivity" />
         <!-- <activity android:name=".tictactoe.fcm.MainFCMActivity" /> -->
         <service android:name=".tictactoe.fcm.WordGameMessagingService">
             <intent-filter>
@@ -41,7 +62,27 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".project.services.GeofenceTransitionsIntentService">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </service>
+
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+        <receiver android:name=".project.GeofenceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".tictactoe.ReceiveNotification" />
+        <activity
+            android:name=".project.ProjectMainActivity"
+            android:theme="@style/theme" />
+        <activity android:name=".project.Main2Activity"></activity>
     </application>
 
 </manifest>

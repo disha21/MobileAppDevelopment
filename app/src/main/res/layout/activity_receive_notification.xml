@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.neu.madcourse.dishasoni.tictactoe.ReceiveNotification">
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:id="@+id/layoutContainer"  android:gravity="center" android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:background="@drawable/app3">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/msg1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="20dp"
+
+                    android:text= "A new player is added to the leaderboard. "/>
+                <TextView
+                    android:id="@+id/msg2"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="20dp"
+                    android:inputType="text"
+                    android:layout_marginTop="10dp"
+                    android:text= "Check the new Score "/>
+                <Button
+                    android:id="@+id/LeaderBorad"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="GoLeader"
+                    android:text="Go to LeaderBorad"
+                    android:background="@color/available_color"></Button>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

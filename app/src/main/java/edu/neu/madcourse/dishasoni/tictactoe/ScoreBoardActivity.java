@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,38 +32,47 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     TextView username;
     List<Score> userScoreList = new ArrayList<Score>();
-
+    String user = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_board);
         Bundle bundle = getIntent().getExtras();
-        String user = bundle.getString("name", "");
+         user = bundle.getString("name", "");
         username = (TextView) findViewById(R.id.table_user);
         username.setText(user);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("/users/" + user);
+        if(user.length() > 0){
+             DatabaseReference ref = database.getReference("/users/" + user);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot scoreSnapshot : dataSnapshot.getChildren()) {
+                        Score score = scoreSnapshot.getValue(Score.class);
+                        userScoreList.add(score);
+                        Log.d("score", score.getDate());
+                    }
+                    if(user.length() > 0)
+                        createScoreTable();
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+
+            });
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Enter a your username to view your scores", Toast.LENGTH_SHORT).show();
+        }
+
 
 // Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot scoreSnapshot : dataSnapshot.getChildren()) {
-                    Score score = scoreSnapshot.getValue(Score.class);
-                    userScoreList.add(score);
-                    Log.d("score", score.getDate());
-                }
-                createScoreTable();
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-
-        });
 
 
     }

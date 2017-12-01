@@ -11,8 +11,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/back_color">
+    android:orientation="vertical">
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,15 +19,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:shrinkColumns="*"
-        android:stretchColumns="*"
-        android:background="#ffaa81">
+        android:stretchColumns="*">
 
         <TableRow
-            android:layout_height="0dp"
-            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:gravity="center_horizontal">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/table_user"
                 android:text="Username"
                 android:layout_weight="1"
@@ -40,34 +40,49 @@
 
 
         <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/tableRow2"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp">
+
+            >
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="score"
-                android:layout_weight="1" android:background="#dcdcdc"
+                android:layout_weight="1" android:background="#7fbf7f"
                 android:textColor="#000000"
-                android:padding="20dip" android:gravity="center"/>
+                 android:gravity="center"
+                android:paddingTop="20dip"
+                android:paddingBottom="20dp"/>
 
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="DateTime"
-                android:layout_weight="1" android:background="#dcdcdc"
+                android:layout_weight="1" android:background="#7fbf7f"
                 android:textColor="#000000"
-                android:padding="20dip" android:gravity="center"/>
+                android:paddingTop="20dip"
+                android:paddingBottom="20dp" android:gravity="center"/>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="Word"
-                android:layout_weight="1" android:background="#dcdcdc"
+                android:layout_weight="1" android:background="#7fbf7f"
                 android:textColor="#000000"
-                android:padding="20dip" android:gravity="center"/>
+                android:paddingTop="20dip"
+                android:paddingBottom="20dp" android:gravity="center"/>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="WordScore"
-                android:layout_weight="1" android:background="#dcdcdc"
+                android:layout_weight="1" android:background="#7fbf7f"
                 android:textColor="#000000"
-                android:padding="20dip" android:gravity="center"/>
+                android:paddingTop="20dip"
+                android:paddingBottom="20dp" android:gravity="center"/>
 
         </TableRow>
 
@@ -76,7 +91,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/table_user_score_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:shrinkColumns="*"
         android:stretchColumns="*"
         android:background="#ffaa81">

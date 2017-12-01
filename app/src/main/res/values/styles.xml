@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        </style>
+
     <style name="TileButton">
         <item name="android:layout_width">@dimen/tile_size</item>
         <item name="android:layout_height">@dimen/tile_size</item>

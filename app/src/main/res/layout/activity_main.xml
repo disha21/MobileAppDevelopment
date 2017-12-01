@@ -22,6 +22,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+
                 android:layout_centerHorizontal="true">
 
                 <Button
@@ -30,11 +31,13 @@
                     android:layout_height="wrap_content"
                     android:onClick="AboutMe"
                     android:text="About"
+                    android:layout_marginBottom="20dp"
                     android:background="@color/available_color"></Button>
 
                 <Button
                     android:id="@+id/ErrorButton"
                     android:layout_width="fill_parent"
+                    android:layout_marginBottom="20dp"
                     android:layout_height="wrap_content"
                     android:onClick="GenerateError"
                     android:text="Generate Error"
@@ -43,16 +46,27 @@
                 <Button
                     android:id="@+id/DictionaryButton"
                     android:layout_width="fill_parent"
+                    android:layout_marginBottom="20dp"
                     android:layout_height="wrap_content"
                     android:onClick="DictionaryActivity"
                     android:text="Dictionary"
+
                     android:background="@color/available_color"></Button>
-                <Button
+                               <Button
                     android:id="@+id/WordGame"
+                    android:layout_marginBottom="20dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="ScroggleActivity"
                     android:text="Word Game"
+                    android:background="@color/available_color"></Button>
+                <Button
+                    android:id="@+id/GeoSilenecer"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="GeosilencerActivity"
+                    android:text="Geo Silencer"
                     android:background="@color/available_color"></Button>
 
 

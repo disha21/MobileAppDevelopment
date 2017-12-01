@@ -47,14 +47,14 @@ public class MainFragment extends Fragment {
           View insButton = rootView.findViewById(R.id.ins_button);
           View scoreButton = rootView.findViewById(R.id.score_button);
           View leaderButton = rootView.findViewById(R.id.leader_button);
-       View notificationButton  = rootView.findViewById(R.id.notification_button);
+      // View notificationButton  = rootView.findViewById(R.id.notification_button);
 
-       notificationButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               startActivity(new Intent(getActivity(), FCMActivity.class));
-           }
-       });
+//       notificationButton.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//               startActivity(new Intent(getActivity(), FCMActivity.class));
+//           }
+//       });
 
       newButton.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -103,7 +103,10 @@ public class MainFragment extends Fragment {
        leaderButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               Bundle bundle = getActivity().getIntent().getExtras();
+               String user = bundle.getString("name", "");
                Intent intent = new Intent(getActivity(), LeadeBoardActivity.class);
+               intent.putExtra("name",user);
                getActivity().startActivity(intent);
            }
        });

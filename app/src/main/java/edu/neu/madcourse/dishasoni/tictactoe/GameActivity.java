@@ -44,6 +44,7 @@ public class GameActivity extends Activity {
     private GameFragment mGameFragment;
     private static ControlFragment controlFragment;
     public static Vibrator vibrator;
+    public boolean gameStatus = false;
 
 
     static int score = 0;
@@ -70,9 +71,10 @@ public class GameActivity extends Activity {
         String user = bundle.getString("name", "");
         TextView tv = (TextView) findViewById(R.id.username);
         if(user.trim().length() > 0 )
-            tv.setText("Welcome" + user);
+            tv.setText("Welcome " + user);
         else
             tv.setText("Welcome Guest");
+        gameStatus = true;
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
         controlFragment =  (ControlFragment)getFragmentManager()
@@ -90,6 +92,7 @@ public class GameActivity extends Activity {
         Log.d("UT3", "restore = " + restore);
 
        // FirebaseMessaging.getInstance().subscribeToTopic("news");
+
 
     }
 

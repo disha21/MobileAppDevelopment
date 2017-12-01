@@ -1,5 +1,8 @@
 package edu.neu.madcourse.dishasoni.tictactoe.fcm;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,12 +15,17 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import edu.neu.madcourse.dishasoni.tictactoe.LeadeBoardActivity;
+import java.util.List;
 
 import edu.neu.madcourse.dishasoni.R;
+import edu.neu.madcourse.dishasoni.tictactoe.HelloMad;
+import edu.neu.madcourse.dishasoni.tictactoe.LeadeBoardActivity;
+import edu.neu.madcourse.dishasoni.tictactoe.ReceiveNotification;
+
 
 public class WordGameMessagingService extends FirebaseMessagingService {
     private static final String TAG = WordGameMessagingService.class.getSimpleName();
+    static AlertDialog alertBox2;
 
     /**
      * Called when message is received.
@@ -52,9 +60,34 @@ public class WordGameMessagingService extends FirebaseMessagingService {
 
             // Note: We happen to be just getting the body of the notification and displaying it.
             // We could also get the title and other info and do different things.
-            sendNotification(remoteMessage.getNotification().getBody());
+            String msg = remoteMessage.getNotification().getBody();
+            if(msg.startsWith("Congratulations"))
+                sendNotification(msg);
+            else
+            checkApplicationStatus(msg);
+           // sendNotification();
         }
 
+    }
+
+    public void checkApplicationStatus(String message){
+        if(isAppRunning("edu.neu.madcourse.dishasoni") == "notRunning"){
+            Log.d("app is","App is not running");
+            sendNotification(message);
+        }
+        if(isAppRunning("edu.neu.madcourse.dishasoni") == "foregroundService") {
+            Intent in = new Intent(this, ReceiveNotification.class);
+            startActivity(in);
+        }
+
+        if(isAppRunning("edu.neu.madcourse.dishasoni") == "background") {
+            Log.d("app is", "App is  running in background");
+            sendNotification(message);
+        }
+        if(isAppRunning("edu.neu.madcourse.dishasoni") == "foreground"){
+            Log.d("app is","App is not running");
+            sendNotification(message);
+        }
     }
     // [END receive_message]
 
@@ -62,27 +95,66 @@ public class WordGameMessagingService extends FirebaseMessagingService {
      * Create and show a simple notification containing the received FCM message.
      *
      * @param messageBody FCM message body received.
+     *
+     *
      */
     private void sendNotification(String messageBody) {
 
-        Intent intent = new Intent(this, LeadeBoardActivity.class);
+        Intent intent = new Intent(this,LeadeBoardActivity.class);
+//        intent.putExtra("name", "");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+//                PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent callIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis(),
+                new Intent(this, LeadeBoardActivity.class), 0);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        Notification notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.home)
-                .setContentTitle("A new player has been added to the leaderboard")
+                .setContentTitle("Scroggle")
                 .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .addAction(R.drawable.home, "Go To LeaderBoard", callIntent).setContentIntent(pendingIntent).build();
+              //  .setAutoCancel(true)
+             //   .setSound(defaultSoundUri)
+              //  .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationBuilder.flags |= Notification.FLAG_AUTO_CANCEL ;
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder);
     }
-}
+
+
+
+    public static String isAppRunning(final String packageName) {
+        final ActivityManager activityManager = (ActivityManager) HelloMad.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
+        final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
+        String status  = "";
+        if (procInfos == null)
+            status =  "notRunning";
+
+            for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
+                Log.d("processInfo",processInfo.toString());
+                if (processInfo.importance == 100 && processInfo.processName.equals(packageName)) {
+                    status =  "foreground";
+                }else if (processInfo.importance == 400 && processInfo.processName.equals(packageName)) {
+                    status =  "background";
+                }
+                else if (processInfo.importance == 125 && processInfo.processName.equals(packageName)) {
+                    status =  "foregroundService";
+                }
+                else{
+                    status =  "notRunning";
+                }
+//                if (processInfo.processName.equals(packageName)) {
+//                    return true;
+//                }
+            }
+
+return status;
+    }
+
+    }

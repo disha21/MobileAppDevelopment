@@ -17,7 +17,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="centerCrop"
-      android:src="@drawable/menu_background"/>
+      android:src="@drawable/app3"/>
 
    <LinearLayout
       android:layout_width="match_parent"
@@ -29,7 +29,10 @@
       <TextView
           android:id="@+id/username"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal|center_vertical"
+          android:textSize="30sp"
+          android:gravity="center_horizontal|center_vertical"/>
 
 
       <!-- Control fragment goes here... -->
@@ -39,14 +42,17 @@
          class="edu.neu.madcourse.dishasoni.tictactoe.ControlFragment"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         tools:layout="@layout/fragment_control"/>
+         tools:layout="@layout/fragment_control"
+          android:layout_gravity="center_horizontal|center_vertical"/>
 
       <fragment
           android:id="@+id/fragment_game"
           class="edu.neu.madcourse.dishasoni.tictactoe.GameFragment"
-          android:layout_width="wrap_content"
+          android:layout_width="286dp"
+          android:layout_marginTop="25dip"
           android:layout_height="wrap_content"
-          tools:layout="@layout/fragment_game"/>
+          tools:layout="@layout/fragment_game"
+          android:layout_gravity="center_horizontal|center_vertical"/>
 
    </LinearLayout>
 

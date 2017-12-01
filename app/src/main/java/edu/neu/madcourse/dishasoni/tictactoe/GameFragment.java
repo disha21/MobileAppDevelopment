@@ -224,7 +224,7 @@ public class GameFragment extends Fragment {
 //                                Log.d("indexes removed", indexes.toString());
                             } else {
                                 if(gameBoard.isValidMove(fLarge, fSmall)){
-                                    vibrator.vibrate(500);
+                                    vibrator.vibrate(50);
 //                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 150);
 //                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,250);
 //                                    mLastLarge = fLarge;

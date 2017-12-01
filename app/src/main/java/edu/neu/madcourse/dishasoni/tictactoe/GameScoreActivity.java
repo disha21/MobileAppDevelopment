@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
@@ -56,7 +57,8 @@ public class GameScoreActivity extends Activity  {
     private DatabaseReference mDatabase;
     String user = "";
     int finalScore = 0;
-    View type;
+    String token = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +68,14 @@ public class GameScoreActivity extends Activity  {
         Bundle bundle = getIntent().getExtras();
         user = bundle.getString("name", "");
         FirebaseMessaging.getInstance().subscribeToTopic("news");
+        token = FirebaseInstanceId.getInstance().getToken();
         mDatabase = FirebaseDatabase.getInstance().getReference();
       //  Toast.makeText(getApplicationContext(), "Subscribed !", Toast.LENGTH_SHORT).show();
         finalScore = totalScorePhase1;
         int wrong = notFoundWords.size();
         finalScore = finalScore - wrong * 2;
         Log.d("finalScore:", String.valueOf(finalScore));
+        registerUser();
         String right = "Right words:"+"\n";
         String wrongWords = "Wrong words:" +"\n";
         Iterator<String> itRight = foundWords.iterator();
@@ -182,6 +186,12 @@ public class GameScoreActivity extends Activity  {
 
     }
 
+    protected void registerUser(){
+        String username  = user.substring(7).toLowerCase();
+        RegisterUser regUser = new RegisterUser(username,token);
+        mDatabase.child("registeredUsers").child(regUser.getUserName()).setValue(regUser.getRegistrationId());
+    }
+
     protected void saveToDatabase(){
         Log.e("in data", "in save data");
         String word = findWordWithMaxScore();
@@ -190,28 +200,13 @@ public class GameScoreActivity extends Activity  {
         Score score = new Score(gameDate,finalScore,val[1],val[0]);
 //        List<Score> userScores = new ArrayList<Score>();
 //        userScores.add(score);
-        String username  = user.substring(7).toLowerCase();
+        String username  = user.substring(7).toLowerCase().trim();
         User userData = new User(username,score);
-        mDatabase.child("users").child(userData.getUserName()).push().setValue(userData.getScores());
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-////                String value = dataSnapshot.getValue(String.class);
-////                Log.d(TAG, "Value is: " + value);
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
 
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mDatabase.child("users").child(userData.getUserName()).push().setValue(userData.getScores());
+
+        mDatabase
+                .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Log.d("new user added","new user added");
