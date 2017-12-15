@@ -20,9 +20,8 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("inReceiver","inReceiver:");
-        if (intent.getAction().matches("android.location.PROVIDERS_CHANGED"))
-        {
+        Log.d("GeofenceReceiver","GeofenceBroadcastReceiver");
+
             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -31,6 +30,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 Intent startServiceIntent = new Intent(context, AddingGeofencesService.class);
                 context.startService(startServiceIntent);
             }
-        }
+
     }
 }

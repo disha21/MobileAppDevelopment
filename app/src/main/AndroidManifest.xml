@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <permission
         android:name="android.permission.MAPS_RECEIVE"
@@ -70,13 +71,13 @@
             </intent-filter>
         </service>
 
-        <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
 
-        <!--<receiver android:name=".project.GeofenceBroadcastReceiver">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <service android:name=".project.services.AddingGeofencesService"/>
+        <receiver android:name=".project.GeofenceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".tictactoe.ReceiveNotification" />
         <activity
