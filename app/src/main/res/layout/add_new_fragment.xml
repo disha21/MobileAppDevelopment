@@ -18,53 +18,82 @@
     android:layout_height="wrap_content"
     />
 
-
-
-        <com.google.android.gms.maps.MapView
+    <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="50"
             android:paddingBottom="40dp"/>
 
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Location Address"
-        android:gravity="center_horizontal"
-        android:paddingBottom="30dp"
 
-        />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="20dp">
-    <EditText
-        android:id="@+id/viewTextLocationName"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter Location Name"
-        android:gravity="left"
-        android:paddingRight="20dp"
-        android:imeOptions="actionNext"
+        android:hint="Location Address"
+        android:layout_gravity="center"
+        android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/viewTextLocationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Location Name"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"/>
+    <EditText
+        android:id="@+id/viewTextLocationRadius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Zone radius(metres)"
         android:maxLines="1"
         android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
         />
-    <Spinner
-        android:id="@+id/spinner1"
+
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/array_ringing_mode"
-        android:gravity="left"
+        android:orientation="horizontal"
+        android:id="@+id/ringing_mode"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp">
+        <RadioButton android:id="@+id/silent_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SILENT"
+            android:paddingRight="10dp"/>
+        <RadioButton android:id="@+id/ringing_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RINGING" />
+    </RadioGroup>
 
-        android:background="@drawable/spinner_item_layout"
 
-        />
 
-</LinearLayout>
+    <!--<Spinner-->
+        <!--android:id="@+id/spinner1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:drawSelectorOnTop="true"-->
+        <!--android:entries="@array/array_ringing_mode"-->
+        <!--android:gravity="left"-->
+        <!--android:background="@drawable/spinner_item_layout"-->
+        <!--/>-->
+
+
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
@@ -72,10 +101,28 @@
         android:text="Save"
         android:layout_gravity="center"
         android:background="@color/available_color"
+        android:textStyle="bold"/>
 
-       />
+    <!--<Button-->
+    <!--android:id="@+id/audio_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Silent"-->
+    <!--android:layout_gravity="center"-->
+        <!--android:paddingBottom="10dp"-->
+    <!--android:background="@color/available_color"-->
+       <!--/>-->
 
-        </LinearLayout>
+    <!--<Button-->
+        <!--android:id="@+id/ringing_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Audio"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@color/available_color"/>-->
+
+ </LinearLayout>
+    </LinearLayout>
 
 
 

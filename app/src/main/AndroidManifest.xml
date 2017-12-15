@@ -70,19 +70,19 @@
             </intent-filter>
         </service>
 
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+        <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
 
-        <receiver android:name=".project.GeofenceBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name=".project.GeofenceBroadcastReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <activity android:name=".tictactoe.ReceiveNotification" />
         <activity
             android:name=".project.ProjectMainActivity"
             android:theme="@style/theme" />
-        <activity android:name=".project.Main2Activity"></activity>
+
     </application>
 
 </manifest>

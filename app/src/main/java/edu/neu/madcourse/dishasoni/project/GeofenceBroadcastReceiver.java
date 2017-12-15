@@ -3,9 +3,11 @@ package edu.neu.madcourse.dishasoni.project;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import edu.neu.madcourse.dishasoni.project.services.AddingGeofencesService;
 import edu.neu.madcourse.dishasoni.project.services.GeofenceTransitionsIntentService;
 
 /**
@@ -13,13 +15,22 @@ import edu.neu.madcourse.dishasoni.project.services.GeofenceTransitionsIntentSer
  */
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
+    boolean isGpsEnabled;
+    boolean isNetworkEnabled;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("inReceiver","inReceiver:");
-        Intent startServiceIntent = new Intent(context, GeofenceTransitionsIntentService.class);
-        Bundle extras = intent.getExtras();
-        int ringingModeVal = extras.getInt("ringingMode");
-        startServiceIntent.putExtra("ringingMode",ringingModeVal);
-        context.startService(startServiceIntent);
+        if (intent.getAction().matches("android.location.PROVIDERS_CHANGED"))
+        {
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (isGpsEnabled || isNetworkEnabled) {
+                Intent startServiceIntent = new Intent(context, AddingGeofencesService.class);
+                context.startService(startServiceIntent);
+            }
+        }
     }
 }

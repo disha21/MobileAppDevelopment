@@ -23,6 +23,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
@@ -32,16 +33,15 @@ import java.util.List;
 
 import edu.neu.madcourse.dishasoni.R;
 import edu.neu.madcourse.dishasoni.project.GeofenceErrorMessages;
-import edu.neu.madcourse.dishasoni.project.ProjectMainActivity;
-import edu.neu.madcourse.dishasoni.tictactoe.LeadeBoardActivity;
+
+
 
 import static android.R.attr.mode;
 
 public class GeofenceTransitionsIntentService  extends IntentService {
     private static final String TAG = "GeofenceTransitionsIS";
     Context context = this;
-    int ringingModeVal;
-    SharedPreferences sharedPref;
+    int ringingModeVal = 0;
     /**
      * This constructor is required, and calls the super IntentService(String)
      * constructor with the name for a worker thread.
@@ -51,6 +51,14 @@ public class GeofenceTransitionsIntentService  extends IntentService {
         super(TAG);
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        super.onStartCommand(intent, flags, startId);
+        Toast.makeText(this, "IntentService Started", Toast.LENGTH_LONG).show();
+        return START_STICKY;
+    }
+
     /**
      * Handles incoming intents.
      * @param intent sent by Location Services. This Intent is provided to Location
@@ -58,14 +66,15 @@ public class GeofenceTransitionsIntentService  extends IntentService {
      */
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("geofence intent","geofence intent");
-        android.os.Debug.waitForDebugger();
+        Log.i(TAG,"geofence intent");
+        //android.os.Debug.waitForDebugger();
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         Bundle extras = intent.getExtras();
-        ringingModeVal = extras.getInt("ringingMode");
-        Context ctx = getApplicationContext();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-       // ringingModeVal = Integer.parseInt(ringingModeValue);
+        if(extras!= null){
+            ringingModeVal = Integer.parseInt(extras.get("ringingMode").toString());
+
+        }
+       //
         if (geofencingEvent.hasError()) {
             String errorMessage = GeofenceErrorMessages.getErrorString(this,
                     geofencingEvent.getErrorCode());
@@ -73,12 +82,13 @@ public class GeofenceTransitionsIntentService  extends IntentService {
             return;
         }
 
+        Log.i(TAG,"after intent");
+
         // Get the transition type.
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
         // Test that the reported transition was of interest.
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER
-               ) {
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
 
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
@@ -86,6 +96,7 @@ public class GeofenceTransitionsIntentService  extends IntentService {
             // Get the transition details as a String.
             String geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
                     triggeringGeofences);
+            Log.i(TAG,"before send");
 
             // Send notification and log the transition details.
             sendNotification(geofenceTransitionDetails,context);
@@ -115,6 +126,7 @@ public class GeofenceTransitionsIntentService  extends IntentService {
         ArrayList<String> triggeringGeofencesIdsList = new ArrayList<>();
         for (Geofence geofence : triggeringGeofences) {
             triggeringGeofencesIdsList.add(geofence.getRequestId());
+
         }
         String triggeringGeofencesIdsString = TextUtils.join(", ",  triggeringGeofencesIdsList);
 
@@ -126,20 +138,26 @@ public class GeofenceTransitionsIntentService  extends IntentService {
      * If the user clicks the notification, control goes to the MainActivity.
      */
     private void sendNotification(String notificationDetails,Context context) {
-
+        Log.i(TAG,"sendNotification");
         // Create an explicit content Intent that starts the main Activity.
-        Log.d("transitionDetails",notificationDetails);
+        Log.i(TAG, notificationDetails);
         if(ringingModeVal == 0){
             NotificationManager nm = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
             AudioManager audioManager = (AudioManager)context.getSystemService(AUDIO_SERVICE);
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && nm.isNotificationPolicyAccessGranted())
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            else{
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            }
         }
         if(ringingModeVal == 1){
             NotificationManager nm = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
             AudioManager audioManager = (AudioManager)context.getSystemService(AUDIO_SERVICE);
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && nm.isNotificationPolicyAccessGranted())
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            else{
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            }
         }
 
         //Check if the phone is running Marshmallow or above

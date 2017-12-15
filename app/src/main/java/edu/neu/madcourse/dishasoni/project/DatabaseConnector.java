@@ -22,10 +22,9 @@ public class DatabaseConnector {
     // Declare Variables
     private static final String DB_NAME = "GeoSilencerDb";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private SQLiteDatabase database;
     private DatabaseHelper dbOpenHelper;
-    List<SettingsInfo> locationSettingsList = new ArrayList<SettingsInfo>();
 
     public static class LocationEntry implements BaseColumns {
         public static final String TABLE_NAME = "locationDetails";
@@ -35,6 +34,7 @@ public class DatabaseConnector {
         public static final String LATITUDE = "latitude";
         public static final String LONGITUDE = "longitude";
         public static final String RINGING_MODE = "ringingMode";
+        public static final String RADIUS = "radius";
     }
 
 
@@ -58,17 +58,23 @@ public class DatabaseConnector {
     }
 
     // Create Database function
-    public long InsertLocationDetails(String locationName, String address, double latitude, double longitude, int ringingMode) {
+    public long InsertLocationDetails(String locationName, String address, double latitude, double longitude, int ringingMode,double radius) {
         ContentValues newCon = new ContentValues();
         newCon.put(LocationEntry.LOCATION_NAME, locationName);
         newCon.put(LocationEntry.ADDRESS, address);
         newCon.put(LocationEntry.LATITUDE, latitude);
         newCon.put(LocationEntry.LONGITUDE, longitude);
         newCon.put(LocationEntry.RINGING_MODE, ringingMode);
-
+        newCon.put(LocationEntry.RADIUS, radius);
         open();
         long rowId = database.insert(LocationEntry.TABLE_NAME, null, newCon);
         return rowId;
+
+    }
+
+    public boolean deleteLocation(long id){
+
+            return database.delete(LocationEntry.TABLE_NAME, LocationEntry._ID + "=" + id, null) > 0;
 
     }
 
@@ -88,11 +94,17 @@ public class DatabaseConnector {
     }
 
     public List<SettingsInfo> listAllLocations() {
+        List<SettingsInfo> locationSettingsList = new ArrayList<SettingsInfo>();
+
         String[] projection = {
+                LocationEntry._ID,
                 LocationEntry.LOCATION_NAME,
                 LocationEntry.RINGING_MODE,
                 LocationEntry.LATITUDE,
-                LocationEntry.LONGITUDE
+                LocationEntry.LONGITUDE,
+                LocationEntry.ADDRESS,
+                LocationEntry.RADIUS
+
         };
 
 // Filter results WHERE "title" = 'My Title'
@@ -101,7 +113,7 @@ public class DatabaseConnector {
 //
 //// How you want the results sorted in the resulting Cursor
 //        String sortOrder =
-//                FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";
+//                LocationEntry._ID + " DESC";
 
         Cursor cursorLocations = database.query(
                 LocationEntry.TABLE_NAME,                     // The table to query
@@ -122,10 +134,16 @@ public class DatabaseConnector {
                     cursorLocations.getColumnIndexOrThrow(LocationEntry.LOCATION_NAME));
             Long ringingModeId = cursorLocations.getLong(
                     cursorLocations.getColumnIndexOrThrow(LocationEntry.RINGING_MODE));
+            Long dbID = cursorLocations.getLong(
+                    cursorLocations.getColumnIndexOrThrow(LocationEntry._ID));
             String latitude = cursorLocations.getString(
                     cursorLocations.getColumnIndexOrThrow(LocationEntry.LATITUDE));
             String longitude = cursorLocations.getString(
                     cursorLocations.getColumnIndexOrThrow(LocationEntry.LONGITUDE));
+            String address = cursorLocations.getString(
+                    cursorLocations.getColumnIndexOrThrow(LocationEntry.ADDRESS));
+            String radius  = cursorLocations.getString(
+                    cursorLocations.getColumnIndexOrThrow(LocationEntry.RADIUS));
             String ringingMode = "";
             if(ringingModeId == 0){
                 ringingMode =  "SILENT";
@@ -133,7 +151,7 @@ public class DatabaseConnector {
             if(ringingModeId == 1){
                 ringingMode =  "RINGING";
             }
-            SettingsInfo settingsInfo = new SettingsInfo(locationName,ringingMode,Double.valueOf(latitude),Double.valueOf(longitude));
+            SettingsInfo settingsInfo = new SettingsInfo(locationName,ringingMode,Double.valueOf(latitude),Double.valueOf(longitude),address,dbID,Double.valueOf(radius));
             locationSettingsList.add(settingsInfo);
         }
         cursorLocations.close();
